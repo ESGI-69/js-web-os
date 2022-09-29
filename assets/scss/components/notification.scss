@@ -1,0 +1,59 @@
+.notification {
+  background: rgba($color: #FFF, $alpha: 0.2);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba($color: #FFF, $alpha: 0.2);
+  color: #FFF;
+  display: grid;
+  padding: 16px;
+  position: absolute;
+  top: -90px;
+  left: 0;
+  width: calc(100% - 16px * 2);
+  box-sizing: border-box;
+  grid-template-areas:
+    "image title"
+    "image content";
+  justify-content: start;
+  margin: 16px;
+  font-size: 0.8rem;
+
+  &--show-animation {
+    animation: show-notification 0.3s ease-in-out;
+  }
+
+  &--show {
+    top: 32px;
+  }
+
+  &__image {
+    height: 32px;
+    width: 32px;
+    grid-area: image;
+    margin-right: 12px;
+  }
+
+  &__title {
+    grid-area: title;
+    font-weight: bold;
+  }
+
+  &__content {
+    grid-area: content;
+  }
+
+  @keyframes show-notification {
+    0% {
+      top: -90px;
+      transform: scale(0.8);
+    }
+    80% {
+      top: 42px;
+      transform: scale(1.1);
+    }
+    100% {
+      top: 32px;
+      transform: scale(1);
+    }
+  }
+}
