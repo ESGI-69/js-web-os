@@ -1,9 +1,7 @@
 @use './fonts.scss' as *;
-@use './components/iphone.scss' as *;
 @use './components/notification.scss' as *;
 
 body {
   background: linear-gradient(60deg, #22213d 1%,#4e3188 100%);
   font-family: 'Fira Sans', sans-serif;
 }
-
