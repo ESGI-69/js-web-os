@@ -1,5 +1,6 @@
 // The ?raw makes vite import the value as string
 import screenComponent from './components/lockscreen.html?raw';
+import notificationComponent from './components/notification.html?raw';
 import './assets/scss/style.scss';
 
 const screenLockToogle = () => {
@@ -32,9 +33,25 @@ const vibrate = (duration = 300) => {
   }, duration);
 };
 
+const sendNotification = () => {
+  const screenElement = window.document.querySelector('.iphone__screen');
+  if (!screenElement) return;
+  screenElement.insertAdjacentHTML('beforeend', notificationComponent);
+  const notificationElement = window.document.querySelector('.notification');
+  notificationElement.classList.add('notification--show-animation');
+  setTimeout(() => {
+    notificationElement.classList.remove('notification--show-animation')
+    notificationElement.classList.add('notification--show');
+  }, 300);
+};
+
 const phoneElement = window.document.querySelector('.iphone');
 let screenElement = window.document.querySelector('.iphone__screen');
 
 // Screen lock button event
 const lockScreenButton = window.document.querySelector('#screen-lock');
 lockScreenButton.addEventListener('click', screenLockToogle);
+
+// Notificaiton button event
+const notificationButton = window.document.querySelector('#notification-button');
+notificationButton.addEventListener('click', sendNotification);
