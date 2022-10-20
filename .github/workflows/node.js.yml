@@ -36,6 +36,5 @@ jobs:
       run: |
         set -ex
         git remote set-url origin https://ESGI-69:${ACCESS_TOKEN}@github.com/ESGI-69/js-web-os.git
-        git subtree add /dist
         git push origin `git subtree split --prefix /dist master`:gh-pages --force
     
