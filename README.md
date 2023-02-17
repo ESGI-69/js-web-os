@@ -1,4 +1,88 @@
 # js-web-os
+## Developpement :
+
+### Comment Créer une nouvelle application :
+
+- Créer un dossier dans le fichier `components/apps` avec le nom de votre application avec le contenu suivant :
+
+  ```js
+  // Etend la classe HTMLElement
+  class appExample extends HTMLElement {
+    constructor() {
+      // Appel du constructeur de la classe parente
+      super();
+      // Création d'un shadow DOM
+      this.shadow = this.attachShadow({ mode: 'open' });
+    }
+
+    // Appelé lorsque l'élément est inséré dans le DOM
+    connectedCallback() {
+      // Appel de la fonction de rendu avant d'ajouter l'écouteur d'événement
+      this.render();
+      // Ajoute un écouteur d'événement sur le bouton pour fermer l'application
+      this.shadow.querySelector('#close').addEventListener('click', () => {
+        this.closeApp();
+      });
+    }
+
+    closeApp() {
+      // Envoie un événement pour fermer l'application
+      document.dispatchEvent(new CustomEvent('close-app', {
+        detail: {
+          id: 'example',
+        },
+      }));
+    };
+
+    render() {
+      this.shadow.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            background-color: blue;
+          }
+        </style>
+        <button id="close">Close the app</button>
+        <span>Example</span>
+        <span>Example text</span>
+      `;
+    }
+  }
+
+  customElements.define('os-app-example', appExample);
+  ```
+
+- Ajouter le nom de votre application dans le fichier `main.js` :
+
+  ```js
+  import './components/apps/exmaple';
+  ```
+
+- Ajouter les info de votre application dans le fichier `allApps.js` :
+
+  ```js
+  import exampleIcon from './assets/images/icons/example.png';
+
+  ...
+
+  {
+    // Nom de l'application qui s'affichera si l'app n'est pas dans le dock
+    name: 'Example',
+    // Icone de l'application
+    icon: exampleIcon,
+    // Id de l'application
+    id: 'example',
+    // html tag de l'application
+    tag: 'os-app-exmaple',
+    // Si l'application doit s'afficher dans le dock
+    isInDock: true,
+  },
+  ```
+
+  **A noter:**
+  - Le `tag` de l'application doit être le même que celui défini dans le fichier `components/apps/example.js` dans la fonction `customElements.define('os-app-example', appExample);`
+  - L'`id` de l'application doit être le même que celui défini dans le fichier `components/apps/example.js` dans la fonction `document.dispatchEvent(new CustomEvent('close-app', { detail: { id: 'example', } }));`
+
 ## Installation :
 
 ```sh
