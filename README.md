@@ -19,20 +19,7 @@
     connectedCallback() {
       // Appel de la fonction de rendu avant d'ajouter l'écouteur d'événement
       this.render();
-      // Ajoute un écouteur d'événement sur le bouton pour fermer l'application
-      this.shadow.querySelector('#close').addEventListener('click', () => {
-        this.closeApp();
-      });
     }
-
-    closeApp() {
-      // Envoie un événement pour fermer l'application
-      document.dispatchEvent(new CustomEvent('close-app', {
-        detail: {
-          id: 'example',
-        },
-      }));
-    };
 
     render() {
       this.shadow.innerHTML = `
@@ -42,7 +29,6 @@
             background-color: blue;
           }
         </style>
-        <button id="close">Close the app</button>
         <span>Example</span>
         <span>Example text</span>
       `;
