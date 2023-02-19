@@ -14,11 +14,12 @@ class App extends HTMLElement {
         :host {
           display: grid;
           grid-template-columns: 1fr;
-          grid-template-rows: 1fr auto;
+          grid-template-rows: auto 1fr auto;
           height: 100%;
         }
       </style>
-      <div class="test"></div>
+      <os-topbar></os-topbar>
+      <os-app-list></os-app-list>
       <os-dock class="dock"></os-dock>
       <os-app-wrapper></os-app-wrapper>
     `;
