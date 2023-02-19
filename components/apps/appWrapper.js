@@ -12,7 +12,18 @@ class appWrapper extends HTMLElement {
       const app = allApps.find((app) => app.id === detail.id);
       this.openApp(app);
     });
+    // DO NOT APPROVE PR IF THIS IS NOT REMOVED
+    this.openApp({
+      name: 'Calculator',
+      id: 'calculator',
+      tag: 'os-app-calculator',
+      isInDock: true,
+    });
 
+    this.shadow.querySelector('#close').addEventListener('click', () => {
+      this.closeApp();
+    });
+    
     document.addEventListener('close-app', () => {
       this.closeApp();
     });
@@ -66,7 +77,24 @@ class appWrapper extends HTMLElement {
           height: 100%;
           display: block;
         }
+        :host #close {
+          all: unset;
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          cursor: pointer;
+          font-size: 1.5rem;
+          background-color: #8B0000;
+          color: #580000;
+          border-radius: 200px;
+          height: 1.5rem;
+          width: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       </style>
+      <button id="close">×</button>
       <div id="app">
       </div>
     `;

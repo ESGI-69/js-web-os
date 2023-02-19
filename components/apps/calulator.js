@@ -142,9 +142,6 @@ class appWrapper extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.shadow.querySelector('#close').addEventListener('click', () => {
-      this.closeApp();
-    });
     this.result = this.shadow.querySelector('.js-result');
     this.buttons = this.shadow.querySelectorAll('button');
     this.addEventToButtons();
@@ -201,14 +198,6 @@ class appWrapper extends HTMLElement {
       }
     }.bind(this));
   }
-
-  closeApp() {
-    document.dispatchEvent(new CustomEvent('close-app', {
-      detail: {
-        id: 'calculator',
-      },
-    }));
-  };
 
   render() {
     this.shadow.innerHTML = `
@@ -305,7 +294,6 @@ class appWrapper extends HTMLElement {
           right: 0;
         }
       </style>
-      <button id="close">Close the app</button>
       <div class="calc">
         <div class="calc-screen">
           <span class="js-result">0</span>
