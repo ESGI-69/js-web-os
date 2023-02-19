@@ -1,4 +1,12 @@
 # js-web-os
+
+## Fonctionnalités :
+- Applcations:
+  - Calculatrice
+
+- WebAPI:
+  - Vibration
+
 ## Developpement :
 
 ### Comment Créer une nouvelle application :
