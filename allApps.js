@@ -1,5 +1,5 @@
-import calculatorIcon from './assets/images/icons/calculator.png';
-import messagesIcon from './assets/images/icons/messages.png';
+import calculatorIcon from './assets/images/app-icons/calculator.png';
+import messagesIcon from './assets/images/app-icons/messages.png';
 
 export default [
   {
