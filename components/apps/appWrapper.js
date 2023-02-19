@@ -12,18 +12,11 @@ class appWrapper extends HTMLElement {
       const app = allApps.find((app) => app.id === detail.id);
       this.openApp(app);
     });
-    // DO NOT APPROVE PR IF THIS IS NOT REMOVED
-    this.openApp({
-      name: 'Calculator',
-      id: 'calculator',
-      tag: 'os-app-calculator',
-      isInDock: true,
-    });
 
     this.shadow.querySelector('#close').addEventListener('click', () => {
       this.closeApp();
     });
-    
+
     document.addEventListener('close-app', () => {
       this.closeApp();
     });

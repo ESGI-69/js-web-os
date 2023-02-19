@@ -9,6 +9,7 @@ class appWrapper extends HTMLElement {
   }
 
   reset() {
+    this.vibrate();
     this.result.textContent = 0;
     this.action = "";
     this.prevVal = [];
@@ -17,6 +18,9 @@ class appWrapper extends HTMLElement {
   }
 
   negative() {
+    
+    this.vibrate();
+
     let str = String(this.result.textContent); // store current value in a variable
 
     if (!this.action || !this.firstTouch) {
@@ -27,6 +31,9 @@ class appWrapper extends HTMLElement {
   }
 
   float() {
+
+    this.vibrate();
+
     let str = String(this.result.textContent); // store current value in a variable
 
     if (!this.action || !this.firstTouch) {
@@ -41,11 +48,16 @@ class appWrapper extends HTMLElement {
   }
 
   percentage() {
+
+    this.vibrate();
+
     let number = Number(this.result.textContent); // make sure it's a number
     this.result.textContent = number / 100;
   }
 
   number(num) {
+
+    this.vibrate();
 
     let resultText = this.result.textContent;
 
@@ -65,6 +77,8 @@ class appWrapper extends HTMLElement {
   }
 
   operation(target) {
+
+    this.vibrate();
 
     let operator = target.dataset.action;
     console.log(`clicked operator ${operator}`);
@@ -97,6 +111,9 @@ class appWrapper extends HTMLElement {
   }
 
   calculate() {
+    
+    this.vibrate();
+
     let currentVal = Number(this.result.textContent);
     
     function values() {
@@ -145,13 +162,15 @@ class appWrapper extends HTMLElement {
     this.result = this.shadow.querySelector('.js-result');
     this.buttons = this.shadow.querySelectorAll('button');
     this.addEventToButtons();
-    // keyboard support
-    window.addEventListener('keydown', e => {
-      let keycode = e.code;
-      if (keycode >= 48 && keycode <= 57) {
-        this.number(String.fromCharCode(keycode));
-      }
-    });
+  }
+
+  vibrate() {
+    if (navigator.vibrate) {
+      console.log('vibrating');
+      navigator.vibrate(100);
+    } else {
+      console.log('vibration not supported');
+    }
   }
 
   addEventToButtons() {
