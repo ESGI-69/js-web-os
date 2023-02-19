@@ -29,7 +29,6 @@ class Dock extends HTMLElement {
       <style>
         :host {
           padding: 1rem;
-          background: red;
           display: grid;
           grid-template-columns: repeat(4, auto);
           grid-template-rows: 1fr;
