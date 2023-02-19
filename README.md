@@ -5,7 +5,8 @@
   - Calculatrice
 
 - WebAPI:
-  - Vibration
+  - Vibration API
+  - Battery Status API
 
 ## Developpement :
 
@@ -55,7 +56,7 @@
 - Ajouter les info de votre application dans le fichier `allApps.js` :
 
   ```js
-  import exampleIcon from './assets/images/icons/example.png';
+  import exampleIcon from './assets/images/app-icons/example.png';
 
   ...
 
@@ -75,7 +76,6 @@
 
   **A noter:**
   - Le `tag` de l'application doit être le même que celui défini dans le fichier `components/apps/example.js` dans la fonction `customElements.define('os-app-example', appExample);`
-  - L'`id` de l'application doit être le même que celui défini dans le fichier `components/apps/example.js` dans la fonction `document.dispatchEvent(new CustomEvent('close-app', { detail: { id: 'example', } }));`
 
 ## Installation :
 

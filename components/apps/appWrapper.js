@@ -56,10 +56,10 @@ class appWrapper extends HTMLElement {
         :host {
           display: none;
           position: fixed;
-          top: 0;
+          top: 30px;
           left: 0;
           width: 100%;
-          height: 100%;
+          height: calc(100% - 30px);
           background-color: #fff;
         }
         :host(.open) {
