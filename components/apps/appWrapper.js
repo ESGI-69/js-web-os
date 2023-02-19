@@ -63,7 +63,8 @@ class appWrapper extends HTMLElement {
         }
         :host #app, :host #app > * {
           width: 100%;
-          min-height: 100%;
+          height: 100%;
+          display: block;
         }
       </style>
       <div id="app">
