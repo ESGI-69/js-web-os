@@ -69,6 +69,7 @@ class appWrapper extends HTMLElement {
           width: 100%;
           height: 100%;
           display: block;
+          box-sizing: border-box;
         }
         :host #close {
           all: unset;
