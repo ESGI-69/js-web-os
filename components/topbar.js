@@ -108,6 +108,9 @@ class Topbar extends HTMLElement {
         battery.addEventListener('levelchange', () => {
           changeBatteryLevel(battery.level, battery.charging);
         });
+        battery.addEventListener('chargingchange', () => {
+          changeBatteryLevel(battery.level, battery.charging);
+        });
       });
     } else {
       console.warn('Battery API not supported');
