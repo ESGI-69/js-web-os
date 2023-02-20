@@ -28,13 +28,39 @@ class appTictactoe extends HTMLElement {
           margin-top: 20px;
         }
 
+        :host h1 {
+          font-family: 'Pacifico',serif;
+          text-align: center;
+          margin: 0;
+        }
+
+        :host .text-side {
+          font-family: 'Pacifico',serif;
+          font-size: 18px;
+          text-align: center;
+        }
+
+        :host .buttons {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          width: 200px;
+        }
+
+        :host .buttons button {
+          padding: 16px 32px;
+          margin: 16px 32px;
+          border: 6px solid #2c3e50;
+          border-radius: 10px;
+          background-color: #34495e;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
         :host .board {
-          // display: flex;
-          // flex-wrap: wrap;
-          // justify-content: center;
-          // margin-top: 20px;
-          width: 600px;
-          height: 600px;
+          width: 80%;
+          height: 400px;
           margin: 0 auto;
           background-color: #34495e;
           color: #fff;
@@ -46,14 +72,6 @@ class appTictactoe extends HTMLElement {
         }
 
         :host .board div {
-          // width: 60px;
-          // height: 60px;
-          // border: 1px solid black;
-          // display: flex;
-          // align-items: center;
-          // justify-content: center;
-          // font-size: 2rem;
-          // cursor: pointer;
           border: 6px solid #2c3e50;
           border-radius: 2px;
           font-family: Helvetica;
@@ -70,24 +88,36 @@ class appTictactoe extends HTMLElement {
           margin-top: 20px;
         }
 
+        :host .scores p {
+          padding: 0 4px;
+        }
+
         :host .reset {
           margin-top: 20px;
           cursor: pointer;
+          border: 6px solid #dc2626;
+          border-radius: 10px;
+          background-color: #ef4444;
+          color: white;
+          padding: 16px 32px;
         }
 
       </style>
 
       <div class="main">
         <div class="choose-symbol">
-          <p>Choose your symbol:</p>
-          <button id="x-button">X</button>
-          <button id="o-button">O</button>
+          <h1>Tic Tac Toe</h1>
+          <p class="text-side">Choose your side</p>
+          <div class="buttons">
+            <button id="x-button">X</button>
+            <button id="o-button">O</button>
+          </div>
         </div>
         <div class="board"></div>
         <div class="scores">
           <p>Player: ${this.scores.player}</p>
-          <p>Computer: ${this.scores.computer}</p>
-          <p>Draw: ${this.scores.draw}</p>
+          <p> Computer: ${this.scores.computer}</p>
+          <p> Draw: ${this.scores.draw}</p>
         </div>
         <div class="reset">Reset</div>
       </div>
