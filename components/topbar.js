@@ -7,28 +7,58 @@ import BatteryThreeQuartersIcon
 import BellSlashIcon from '../assets/images/icons/bell-slash.svg';
 import BellIcon from '../assets/images/icons/bell.svg';
 import BoltIcon from '../assets/images/icons/bolt.svg';
+import {
+  findSetting,
+  getSettingValue,
+} from '../helpers/settingsHelper';
 
 class Topbar extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: 'open' });
-    this.isTimeVisible = true;
-    this.isVibrationVisible = true;
-    this.isDateVisible = true;
-    this.isPingVisible = true;
-    this.isBatteryVisible = true;
+
+    this.isTimeVisible = getSettingValue(findSetting('topbar-show-time'));
+    this.isVibrationVisible = getSettingValue(findSetting('topbar-show-vibration-status'));
+    this.isDateVisible = getSettingValue(findSetting('topbar-show-date'));
+    this.isPingVisible = getSettingValue(findSetting('topbar-show-ping'));
+    this.isBatteryVisible = getSettingValue(findSetting('topbar-show-battery'));
+
     this.reponseTimes = [];
     this.pingInterval = null
   }
 
+  defineAllEventListeners() {
+    document.addEventListener('changeSetting', (event) => {
+      const applyChanges = () => {
+        clearInterval(this.timeInterval);
+        clearInterval(this.pingInterval);
+        this.render();
+      };
+
+      if (event.detail.setting === 'topbar-show-time') {
+        this.isTimeVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-show-vibration-status') {
+        this.isVibrationVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-show-date') {
+        this.isDateVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-show-ping') {
+        this.isPingVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-show-battery') {
+        this.isBatteryVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'os-vibration') {
+        applyChanges();
+      }
+    });
+  }
+
   connectedCallback() {
     this.render();
-    this.updateTime();
-    setInterval(() => {
-      this.updateTime();
-    }, 1000);
-    this.checkPing();
-    this.checkBattery();
+    this.defineAllEventListeners();
   }
 
   updateTime() {
@@ -72,7 +102,7 @@ class Topbar extends HTMLElement {
             const averageResponseTime = this.reponseTimes.reduce((a, b) => a + b) / this.reponseTimes.length;
             const ping = this.shadow.querySelector('.ping');
             if (this.reponseTimes.length === 5) {
-              ping.textContent = `${Math.round(averageResponseTime)}ms`;
+              ping.textContent = `${Math.round(averageResponseTime)} ms`;
             }
           });
       }, 1000);
@@ -138,7 +168,11 @@ class Topbar extends HTMLElement {
     if (this.isVibrationVisible) {
       const vibration = document.createElement('span');
       vibration.classList.add('vibration');
-      vibration.innerHTML = `<img src="${BellIcon}"> <img src="${BellSlashIcon}">`;
+      if (getSettingValue(findSetting('os-vibration'))) {
+        vibration.innerHTML = `<img src="${BellIcon}">`;
+      } else {
+        vibration.innerHTML = `<img src="${BellSlashIcon}">`;
+      }
       left.append(vibration);
     }
 
@@ -151,7 +185,11 @@ class Topbar extends HTMLElement {
     if (this.isPingVisible) {
       const ping = document.createElement('span');
       ping.classList.add('ping');
-      ping.textContent = '--- ms';
+      ping.textContent = `${
+        this.reponseTimes.length === 5
+          ? Math.round(this.reponseTimes.reduce((a, b) => a + b) / this.reponseTimes.length)
+          : '---'
+      } ms`;
       right.append(ping);
     }
 
@@ -215,6 +253,12 @@ class Topbar extends HTMLElement {
       </style>
     `;
     this.addTopbarItems();
+    this.updateTime();
+    this.timeInterval = setInterval(() => {
+      this.updateTime();
+    }, 1000);
+    this.checkPing();
+    this.checkBattery();
   }
 }
 
