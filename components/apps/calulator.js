@@ -1,3 +1,8 @@
+import {
+  findSetting,
+  getSettingValue,
+} from '../../helpers/settingsHelper';
+
 class appWrapper extends HTMLElement {
   constructor() {
     super();
@@ -166,8 +171,10 @@ class appWrapper extends HTMLElement {
 
   vibrate() {
     if (navigator.vibrate) {
-      console.log('vibrating');
-      navigator.vibrate(100);
+      if (getSettingValue(findSetting('os-vibration'))) {
+        console.log('vibrating');
+        navigator.vibrate(100);
+      }
     } else {
       console.log('vibration not supported');
     }
