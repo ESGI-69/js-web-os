@@ -6,18 +6,7 @@ class appMessage extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.shadow.querySelector('#close').addEventListener('click', () => {
-      this.closeApp();
-    });
   }
-
-  closeApp() {
-    document.dispatchEvent(new CustomEvent('close-app', {
-      detail: {
-        id: 'message',
-      },
-    }));
-  };
 
   render() {
     this.shadow.innerHTML = `
@@ -27,7 +16,6 @@ class appMessage extends HTMLElement {
           background-color: green;
         }
       </style>
-      <button id="close">Close the app</button>
       <span>Message</span>
       <span>Coucou c'est Maman</span>
     `;
