@@ -38,9 +38,26 @@ class appTictactoe extends HTMLElement {
           background: white;
           width: 100%;
           text-align: center;
-          border: 2px solid grey;
-          margin: -19px 8px 0 8px;
+          margin: -20px 8px 0 8px;
           display: none;
+          font-family: 'Pacifico',serif;
+          font-size: 20px;
+        }
+        :host .pop-up-win {
+          background-color: #4ade80;
+
+        }
+
+        :host .pop-up-lose {
+          background-color: #f87171;
+        }
+
+        :host .pop-up-draw {
+          background-color: #fb923c;
+        }
+
+        :host .pop-up p {
+          margin: 16px;
         }
 
         :host h1 {
@@ -254,7 +271,7 @@ class appTictactoe extends HTMLElement {
         }
         setTimeout(() => {
           this.render();
-        }, 3000);
+        }, 2222);
 
         return;
       }
@@ -262,12 +279,14 @@ class appTictactoe extends HTMLElement {
     if (this.board.filter((x) => x === '').length === 0) {
       this.gameOver = true;
       this.scores.draw++;
-      localStorage.setItem('scores', JSON.stringify(this.scores));
+      localStorage.setItem('tictactoe-scores', JSON.stringify(this.scores));
       this.shadow.querySelector('.pop-up-draw').style.display = "block";
       setTimeout(() => {
         this.shadow.querySelector('.pop-up-draw').style.display = "none";
       }, 2000);
-      this.render();
+      setTimeout(() => {
+        this.render();
+      }, 2222);
     }
   }
 
