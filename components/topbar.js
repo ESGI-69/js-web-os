@@ -44,6 +44,8 @@ class Topbar extends HTMLElement {
       } else if (event.detail.setting === 'topbar-show-date') {
         this.isDateVisible = event.detail.value;
         applyChanges();
+      } else if (event.detail.setting === 'topbar-date-format') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-ping') {
         this.isPingVisible = event.detail.value;
         applyChanges();
@@ -82,7 +84,14 @@ class Topbar extends HTMLElement {
 
     if (this.isDateVisible) {
       const date = this.shadow.querySelector('.date');
-      date.textContent = `${day}/${month}/${year}`;
+      const format = getSettingValue(findSetting('topbar-date-format'))
+      if (format === 'dd') {
+        date.textContent = `${day}`;
+      } else if (format === 'dd/mm') {
+        date.textContent = `${day}/${month}`;
+      } else if (format === 'dd/mm/yyyy' || format === null) {
+        date.textContent = `${day}/${month}/${year}`;
+      }
     }
   }
 
