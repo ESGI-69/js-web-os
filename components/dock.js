@@ -14,8 +14,7 @@ class Dock extends HTMLElement {
       app.addEventListener('click', () => {
         document.dispatchEvent(new CustomEvent('open-app', { detail: {
           id: appId
-        },
-      }));
+        }}));
       });
     }
   }
@@ -28,11 +27,10 @@ class Dock extends HTMLElement {
     this.shadow.innerHTML = `
       <style>
         :host {
-          padding: 1rem;
-          display: grid;
-          grid-template-columns: repeat(4, auto);
-          grid-template-rows: 1fr;
-          justify-content: space-around;
+          padding: 1rem 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
 
           background: var(--color-dock-background);
           backdrop-filter: blur(10px);
@@ -49,6 +47,9 @@ class Dock extends HTMLElement {
         <os-app-icon id="${app.id}" name="${app.name}" icon="${app.icon}"></os-app-icon>
       `;
     });
+    if (appIcons.length !== 4) {
+      console.warn('Dock should have 4 icons for lookin good');
+    }
     return appIcons.join('');
   }
 
