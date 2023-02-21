@@ -69,10 +69,17 @@ const findSetting = (settingId) => {
 
 const getSettingValue = (setting) => {
   const settingValue = localStorage.getItem(setting.localStorageKey);
+  if (setting.type === 'select') {
+    if (settingValue === null) {
+      return setting.value;
+    }
+    return settingValue;
+  } else {
   if (settingValue === null) {
     return setting.value;
   }
   return settingValue === 'true';
+  }
 }
 
 export { findSetting, getSettingValue, settings };
