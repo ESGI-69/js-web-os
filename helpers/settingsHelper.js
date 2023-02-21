@@ -98,6 +98,15 @@ const settings = [
         value: 'https://jsonplaceholder.typicode.com/todos/1'
       },
       {
+        name: 'Ping interval',
+        dependsOn: 'topbar-show-ping',
+        dependsOnValue: true,
+        localStorageKey: 'topbar-ping-interval',
+        id: 'topbar-ping-interval',
+        type: 'number',
+        value: 1,
+      },
+      {
         name: 'Show vibration status',
         localStorageKey: 'topbar-show-vibration-status',
         id: 'topbar-show-vibration-status',
