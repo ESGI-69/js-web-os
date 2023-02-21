@@ -7,6 +7,12 @@ import './components/apps/calulator';
 import './components/apps/message';
 import './components/apps/settings';
 import './components/app';
+import './components/icons/bolt';
+import './components/icons/bell';
+import './components/icons/bellSlash';
+import './components/icons/batteryThreeQuarters';
+import './components/icons/batteryHalf';
+import './components/icons/batteryFull';
 
 import backgroundImage from './assets/images/background.jpg';
 import {

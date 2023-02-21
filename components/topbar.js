@@ -1,12 +1,5 @@
 import BatteryEmptyIcon from '../assets/images/icons/battery-empty.svg';
-import BatteryFullIcon from '../assets/images/icons/battery-full.svg';
-import BatteryHalfIcon from '../assets/images/icons/battery-half.svg';
 import BatteryQuarterIcon from '../assets/images/icons/battery-quarter.svg';
-import BatteryThreeQuartersIcon
-  from '../assets/images/icons/battery-three-quarters.svg';
-import BellSlashIcon from '../assets/images/icons/bell-slash.svg';
-import BellIcon from '../assets/images/icons/bell.svg';
-import BoltIcon from '../assets/images/icons/bolt.svg';
 import {
   findSetting,
   getSettingValue,
@@ -142,13 +135,13 @@ class Topbar extends HTMLElement {
       const changeBatteryLevel = (level, isCharging) => {
         let innerHTML = `${Math.round(level * 100)}%`;
         if (isCharging) {
-          innerHTML += `<img src="${BoltIcon}">`;
+          innerHTML += `<icon-bolt></icon-bolt>`;
         } else if (level >= 0.75) {
-          innerHTML += `<img src="${BatteryFullIcon}">`;
+          innerHTML += `<battery-full></battery-full>`;
         } else if (level >= 0.5) {
-          innerHTML += `<img src="${BatteryThreeQuartersIcon}">`;
+          innerHTML += `<battery-three-quarters></battery-three-quarters>`;
         } else if (level >= 0.25) {
-          innerHTML += `<img src="${BatteryHalfIcon}">`;
+          innerHTML += `<battery-half></battery-half>`;
         } else if (level >= 0.1) {
           innerHTML += `<img src="${BatteryQuarterIcon}">`;
         } else {
@@ -168,7 +161,7 @@ class Topbar extends HTMLElement {
       });
     } else {
       console.warn('Battery API not supported');
-      batteryLevel.innerHTML = `--- <img src="${BatteryHalfIcon}">`;
+      batteryLevel.innerHTML = `--- <battery-half></battery-half>`;
     }
   }
 
@@ -193,9 +186,9 @@ class Topbar extends HTMLElement {
       const vibration = document.createElement('span');
       vibration.classList.add('vibration');
       if (getSettingValue(findSetting('os-vibration'))) {
-        vibration.innerHTML = `<img src="${BellIcon}">`;
+        vibration.innerHTML = `<icon-bell></icon-bell>`;
       } else {
-        vibration.innerHTML = `<img src="${BellSlashIcon}">`;
+        vibration.innerHTML = `<icon-bell-slash></icon-bell-slash>`;
       }
       left.append(vibration);
     }
