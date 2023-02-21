@@ -51,6 +51,8 @@ class Topbar extends HTMLElement {
       } else if (event.detail.setting === 'topbar-show-ping') {
         this.isPingVisible = event.detail.value;
         applyChanges();
+      } else if (event.detail.setting === 'topbar-ping-domain') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-battery') {
         this.isBatteryVisible = event.detail.value;
         applyChanges();
@@ -108,7 +110,8 @@ class Topbar extends HTMLElement {
     if (this.isPingVisible) {
       this.pingInterval = setInterval(() => {
         const timeStart = Date.now();
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
+        const pingDomain = getSettingValue(findSetting('topbar-ping-domain'));
+        fetch(pingDomain)
           .then((response) => response.json())
           .then(() => {
             const timeEnd = Date.now();
