@@ -53,6 +53,8 @@ class Topbar extends HTMLElement {
         applyChanges();
       } else if (event.detail.setting === 'topbar-ping-domain') {
         applyChanges();
+      } else if (event.detail.setting === 'topbar-ping-interval') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-battery') {
         this.isBatteryVisible = event.detail.value;
         applyChanges();
@@ -108,6 +110,7 @@ class Topbar extends HTMLElement {
 
   checkPing() {
     if (this.isPingVisible) {
+      const interval = getSettingValue(findSetting('topbar-ping-interval'));
       this.pingInterval = setInterval(() => {
         const timeStart = Date.now();
         const pingDomain = getSettingValue(findSetting('topbar-ping-domain'));
@@ -126,7 +129,7 @@ class Topbar extends HTMLElement {
               ping.textContent = `${Math.round(averageResponseTime)} ms`;
             }
           });
-      }, 1000);
+      }, interval * 1000);
     } else if (this.pingInterval) {
       clearInterval(this.pingInterval);
     }
