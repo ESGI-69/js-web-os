@@ -57,8 +57,16 @@ class AppClock extends HTMLElement {
           font-weight: bold;
           font-size: 1rem;
         }
+
+        :host .current-tab {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       </style>
-      <${this.curentTab}></${this.curentTab}>
+      <div class="current-tab">
+        <${this.curentTab} class=""></${this.curentTab}>
+      </div>
       <div class="tabs">
         ${this.tabs.map((tab) => {
           return `
