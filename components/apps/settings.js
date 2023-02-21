@@ -88,7 +88,6 @@ class appSettings extends HTMLElement {
         }
         const settingValue = this.shadow.querySelector(`#${setting.id}`);
         settingValue.addEventListener('change', (event) => {
-          console.log('change', setting.name, event);
           if (setting.type === 'checkbox') {
             this.changeSettingValue(setting, event.target.checked);
           } else if (setting.type === 'text') {
