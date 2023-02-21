@@ -22,23 +22,21 @@ class appTictactoe extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
       <style>
-        :host body {
-          font-family: Lato, sans-serif;
-        }
-
         :host .main {
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin-top: 20px;
+          background-color: var(--color-background);
+          color: var(--color-text);
+          height: 100%;
         }
 
         :host .pop-up {
           position: fixed;
-          background: white;
+          background: var(--color-background);
           width: 100%;
           text-align: center;
-          margin: -20px 8px 0 8px;
+          margin: 0px 8px 0 8px;
           display: none;
           font-family: 'Pacifico',serif;
           font-size: 20px;
@@ -64,6 +62,7 @@ class appTictactoe extends HTMLElement {
           font-family: 'Pacifico',serif;
           text-align: center;
           margin: 0;
+          margin-top: 20px;
         }
 
         :host .overlay {
@@ -77,9 +76,9 @@ class appTictactoe extends HTMLElement {
         }
 
         :host .choose-symbol {
-          margin: 50% auto;
+          margin: 20vh auto;
           padding: 20px;
-          background: #fff;
+          background: var(--color-background);
           border-radius: 5px;
           width: 70%;
           position: relative;
@@ -104,7 +103,7 @@ class appTictactoe extends HTMLElement {
           border: 6px solid #2c3e50;
           border-radius: 10px;
           background-color: #34495e;
-          color: white;
+          color: var(--color-text);
           font-weight: bold;
           cursor: pointer;
         }
@@ -120,6 +119,12 @@ class appTictactoe extends HTMLElement {
           
           display: grid;
           grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+        }
+
+        @media (min-width: 780px) {
+          :host .board {
+            width: 40%;
+          }
         }
 
         :host .board div {
@@ -149,7 +154,7 @@ class appTictactoe extends HTMLElement {
           border: 6px solid #dc2626;
           border-radius: 10px;
           background-color: #ef4444;
-          color: white;
+          color: var(--color-text);
           padding: 16px 32px;
         }
 
