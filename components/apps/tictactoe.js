@@ -1,3 +1,8 @@
+import {
+  findSetting,
+  getSettingValue,
+} from '../../helpers/settingsHelper';
+
 class appTictactoe extends HTMLElement {
   constructor() {
     super();
@@ -5,7 +10,13 @@ class appTictactoe extends HTMLElement {
     this.player = 'X';
     this.computer = 'O';
     this.board = ['', '', '', '', '', '', '', '', ''];
-    this.scores = {
+    // this.scores = {
+    //   player: 0,
+    //   computer: 0,
+    //   draw: 0
+    // };
+    //store the scores in local storage
+    this.scores = JSON.parse(localStorage.getItem('scores')) || {
       player: 0,
       computer: 0,
       draw: 0
@@ -34,6 +45,28 @@ class appTictactoe extends HTMLElement {
           margin: 0;
         }
 
+        :host .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.7);
+          transition: opacity 500ms;
+          // visibility: hidden;
+          // opacity: 0;
+        }
+
+        :host .choose-symbol {
+          margin: 50% auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          width: 70%;
+          position: relative;
+          transition: all 0.5s ease-in-out;
+        }
+
         :host .text-side {
           font-family: 'Pacifico',serif;
           font-size: 18px;
@@ -44,7 +77,6 @@ class appTictactoe extends HTMLElement {
           display: flex;
           flex-direction: row;
           justify-content: center;
-          width: 200px;
         }
 
         :host .buttons button {
@@ -60,7 +92,7 @@ class appTictactoe extends HTMLElement {
 
         :host .board {
           width: 80%;
-          height: 400px;
+          aspect-ratio : 1 / 1;
           margin: 0 auto;
           background-color: #34495e;
           color: #fff;
@@ -105,12 +137,14 @@ class appTictactoe extends HTMLElement {
       </style>
 
       <div class="main">
-        <div class="choose-symbol">
-          <h1>Tic Tac Toe</h1>
-          <p class="text-side">Choose your side</p>
-          <div class="buttons">
-            <button id="x-button">X</button>
-            <button id="o-button">O</button>
+        <h1>Tic Tac Toe</h1>
+        <div class="overlay">
+          <div class="choose-symbol">
+            <p class="text-side">Choose your side</p>
+            <div class="buttons">
+              <button id="x-button">X</button>
+              <button id="o-button">O</button>
+            </div>
           </div>
         </div>
         <div class="board"></div>
@@ -119,7 +153,7 @@ class appTictactoe extends HTMLElement {
           <p> Computer: ${this.scores.computer}</p>
           <p> Draw: ${this.scores.draw}</p>
         </div>
-        <div class="reset">Reset</div>
+        <div class="reset">Reset current game</div>
       </div>
     `;
     this.boardDiv = this.shadow.querySelector('.board');
@@ -127,16 +161,22 @@ class appTictactoe extends HTMLElement {
     this.xButton = this.shadow.querySelector('#x-button');
     this.oButton = this.shadow.querySelector('#o-button');
     this.xButton.addEventListener('click', () => {
+      this.shadow.querySelector('.overlay').style.visibility = 'hidden';
+      this.shadow.querySelector('.overlay').style.opacity = '0';
       this.player = 'X';
       this.computer = 'O';
       this.startNewGame();
     });
     this.oButton.addEventListener('click', () => {
+      this.shadow.querySelector('.overlay').style.visibility = 'hidden';
+      this.shadow.querySelector('.overlay').style.opacity = '0';
       this.player = 'O';
       this.computer = 'X';
       this.startNewGame();
     });
     this.resetDiv.addEventListener('click', () => {
+      this.shadow.querySelector('.overlay').style.visibility = 'inherit';
+      this.shadow.querySelector('.overlay').style.opacity = '1';
       this.startNewGame();
     });
   }
@@ -169,6 +209,7 @@ class appTictactoe extends HTMLElement {
     });
   }
   makeMove(index, symbol) {
+    this.vibrate();
     this.board[index] = symbol;
     this.renderBoard();
     const winningLines = [
@@ -187,9 +228,11 @@ class appTictactoe extends HTMLElement {
         this.gameOver = true;
         if (this.board[a] === this.player) {
           this.scores.player++;
+          localStorage.setItem('scores', JSON.stringify(this.scores));
           alert('You win!');
         } else {
           this.scores.computer++;
+          localStorage.setItem('scores', JSON.stringify(this.scores));
           alert('You lose!');
         }
         this.render();
@@ -199,6 +242,7 @@ class appTictactoe extends HTMLElement {
     if (this.board.filter((x) => x === '').length === 0) {
       this.gameOver = true;
       this.scores.draw++;
+      localStorage.setItem('scores', JSON.stringify(this.scores));
       alert('Draw!');
       this.render();
     }
@@ -213,6 +257,17 @@ class appTictactoe extends HTMLElement {
     }
     const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
     this.makeMove(randomIndex, this.computer);
+  }
+
+  vibrate() {
+    if (navigator.vibrate) {
+      const vibrationDuration = getSettingValue(findSetting('os-vibration-duration'));
+      if (getSettingValue(findSetting('os-vibration'))) {
+        navigator.vibrate(vibrationDuration);
+      }
+    } else {
+      console.log('vibration not supported');
+    }
   }
 }
 
