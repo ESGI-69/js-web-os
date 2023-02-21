@@ -103,7 +103,7 @@ class appTictactoe extends HTMLElement {
           border: 6px solid #2c3e50;
           border-radius: 10px;
           background-color: #34495e;
-          color: var(--color-text);
+          color: #f6f6f6 ;
           font-weight: bold;
           cursor: pointer;
         }
