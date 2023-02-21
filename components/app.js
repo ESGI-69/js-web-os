@@ -19,7 +19,7 @@ class App extends HTMLElement {
         }
       </style>
       <os-topbar></os-topbar>
-      <os-app-list></os-app-list>
+      <os-home-screen></os-home-screen>
       <os-dock class="dock"></os-dock>
       <os-app-wrapper></os-app-wrapper>
     `;
