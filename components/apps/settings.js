@@ -42,6 +42,12 @@ class appSettings extends HTMLElement {
             </div>
           </div>
           `;
+        } else if (setting.type === 'delete') {
+          html += `
+              <button class="${setting.type}" id="${setting.localStorageKey}" >Delete</button>
+            </div>
+          </div>
+          `;
         } else if (setting.type === 'select') {
           html += `
               <select name="${setting.localStorageKey}">
@@ -87,15 +93,23 @@ class appSettings extends HTMLElement {
           return;
         }
         const settingValue = this.shadow.querySelector(`#${setting.id}`);
-        settingValue.addEventListener('change', (event) => {
-          if (setting.type === 'checkbox') {
-            this.changeSettingValue(setting, event.target.checked);
-          } else if (setting.type === 'text' || setting.type === 'number') {
-            this.changeSettingValue(setting, event.target.value);
-          } else if (setting.type === 'select') {
-            this.changeSettingValue(setting, event.target.value);
-          }
-        });
+        if (setting.type === 'delete') {
+          settingValue.addEventListener('click', (event) => {
+              localStorage.removeItem(setting.localStorageKey);
+              this.render();
+            }
+          );
+        } else {
+          settingValue.addEventListener('change', (event) => {
+            if (setting.type === 'checkbox') {
+              this.changeSettingValue(setting, event.target.checked);
+            } else if (setting.type === 'text' || setting.type === 'number') {
+              this.changeSettingValue(setting, event.target.value);
+            } else if (setting.type === 'select') {
+              this.changeSettingValue(setting, event.target.value);
+            }
+          });
+        }
       });
     });
   }

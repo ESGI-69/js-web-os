@@ -141,6 +141,18 @@ const settings = [
       },
     ],
   },
+  {
+    categoryName: 'Tic Tac Toe',
+    settings: [
+      {
+        name: 'Reset progression',
+        localStorageKey: 'tictactoe-scores',
+        id: 'tictactoe-scores',
+        type: 'delete',
+        value: null,
+      },
+    ],
+  }
 ];
 
 const findSetting = (settingId) => {

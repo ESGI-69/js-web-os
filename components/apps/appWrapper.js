@@ -86,6 +86,7 @@ class appWrapper extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
+          z-index: 1;
         }
       </style>
       <button id="close">×</button>

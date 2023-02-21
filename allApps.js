@@ -1,5 +1,6 @@
 import calculatorIcon from './assets/images/app-icons/calculator.png';
 import messagesIcon from './assets/images/app-icons/messages.png';
+import tictactoeIcon from './assets/images/app-icons/tictactoe.png';
 
 export default [
   {
@@ -23,4 +24,11 @@ export default [
     tag: 'os-app-settings',
     isInDock: true,
   },
+  {
+    name: 'Tic Tac Toe',
+    icon: tictactoeIcon,
+    id: 'tictactoe',
+    tag: 'os-app-tictactoe',
+    isInDock: true,
+  }
 ];

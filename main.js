@@ -6,6 +6,7 @@ import './components/apps/appWrapper';
 import './components/apps/calulator';
 import './components/apps/message';
 import './components/apps/settings';
+import './components/apps/tictactoe';
 import './components/app';
 import './components/icons/bolt';
 import './components/icons/bell';
