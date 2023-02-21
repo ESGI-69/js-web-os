@@ -42,6 +42,12 @@ class appSettings extends HTMLElement {
             </div>
           </div>
           `;
+        } else if (setting.type === 'delete') {
+          html += `
+              <button class="${setting.type}" id="${setting.localStorageKey}" >Delete</button>
+            </div>
+          </div>
+          `;
         } else if (setting.type === 'select') {
           html += `
               <select name="${setting.localStorageKey}">
@@ -96,6 +102,14 @@ class appSettings extends HTMLElement {
             this.changeSettingValue(setting, event.target.value);
           }
         });
+        if (setting.type === 'delete') {
+          settingValue.addEventListener('click', (event) => {
+            console.log("click", setting)
+              localStorage.removeItem(setting.localStorageKey);
+              this.render();
+            }
+          );
+        }
       });
     });
   }
