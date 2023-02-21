@@ -22,6 +22,29 @@ const settings = [
         value: true
       },
       {
+        name: 'Date format',
+        dependsOn: 'topbar-show-date',
+        dependsOnValue: true,
+        localStorageKey: 'topbar-date-format',
+        id: 'topbar-date-format',
+        type: 'select',
+        options: [
+          {
+            name: 'dd/mm/yyyy',
+            value: 'dd/mm/yyyy',
+          },
+          {
+            name: 'dd/mm',
+            value: 'dd/mm',
+          },
+          {
+            name: 'dd',
+            value: 'dd',
+          },
+        ],
+        value: 'dd/mm/yyyy',
+      },
+      {
         name: 'Show time',
         localStorageKey: 'topbar-show-time',
         id: 'topbar-show-time',
@@ -75,10 +98,10 @@ const getSettingValue = (setting) => {
     }
     return settingValue;
   } else {
-  if (settingValue === null) {
-    return setting.value;
-  }
-  return settingValue === 'true';
+    if (settingValue === null) {
+      return setting.value;
+    }
+    return settingValue === 'true';
   }
 }
 
