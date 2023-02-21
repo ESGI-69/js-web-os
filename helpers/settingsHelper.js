@@ -9,6 +9,15 @@ const settings = [
         type: 'checkbox',
         value: true
       },
+      {
+        name: 'Vibration duration',
+        dependsOn: 'os-vibration',
+        dependsOnValue: true,
+        localStorageKey: 'os-vibration-duration',
+        id: 'os-vibration-duration',
+        type: 'number',
+        value: 100,
+      },
     ],
   },
   {
