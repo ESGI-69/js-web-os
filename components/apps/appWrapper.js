@@ -78,8 +78,8 @@ class appWrapper extends HTMLElement {
           right: 1rem;
           cursor: pointer;
           font-size: 1.5rem;
-          background-color: #8B0000;
-          color: #580000;
+          background-color: var(--color-red-dark);
+          color: var(--color-red-darker);
           border-radius: 200px;
           height: 1.5rem;
           width: 1.5rem;

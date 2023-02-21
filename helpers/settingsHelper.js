@@ -18,6 +18,23 @@ const settings = [
         type: 'number',
         value: 100,
       },
+      {
+        name: 'Theme',
+        localStorageKey: 'os-theme',
+        id: 'os-theme',
+        type: 'select',
+        options: [
+          {
+            name: 'Light',
+            value: 'light',
+          },
+          {
+            name: 'Dark',
+            value: 'dark',
+          },
+        ],
+        value: 'dark',
+      },
     ],
   },
   {

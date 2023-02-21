@@ -34,7 +34,7 @@ class Dock extends HTMLElement {
           grid-template-rows: 1fr;
           justify-content: space-around;
 
-          background: rgba(0, 0, 0, 0.2);
+          background: var(--color-dock-background);
           backdrop-filter: blur(10px);
         }
       </style>
