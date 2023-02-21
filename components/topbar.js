@@ -137,11 +137,11 @@ class Topbar extends HTMLElement {
         if (isCharging) {
           innerHTML += `<icon-bolt></icon-bolt>`;
         } else if (level >= 0.75) {
-          innerHTML += `<battery-full></battery-full>`;
+          innerHTML += `<icon-battery-full></icon-battery-full>`;
         } else if (level >= 0.5) {
-          innerHTML += `<battery-three-quarters></battery-three-quarters>`;
+          innerHTML += `<icon-battery-three-quarters></icon-battery-three-quarters>`;
         } else if (level >= 0.25) {
-          innerHTML += `<battery-half></battery-half>`;
+          innerHTML += `<icon-battery-half></icon-battery-half>`;
         } else if (level >= 0.1) {
           innerHTML += `<img src="${BatteryQuarterIcon}">`;
         } else {
@@ -161,7 +161,7 @@ class Topbar extends HTMLElement {
       });
     } else {
       console.warn('Battery API not supported');
-      batteryLevel.innerHTML = `--- <battery-half></battery-half>`;
+      batteryLevel.innerHTML = `--- <icon-battery-half></icon-battery-half>`;
     }
   }
 
