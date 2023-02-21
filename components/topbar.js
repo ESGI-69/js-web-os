@@ -38,6 +38,8 @@ class Topbar extends HTMLElement {
       if (event.detail.setting === 'topbar-show-time') {
         this.isTimeVisible = event.detail.value;
         applyChanges();
+      } else if (event.detail.setting === 'topbar-time-format') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-vibration-status') {
         this.isVibrationVisible = event.detail.value;
         applyChanges();
@@ -66,20 +68,27 @@ class Topbar extends HTMLElement {
   updateTime() {
     const today = new Date();
     let hour = today.getHours();
-    hour = hour.length < 10 ? `0${hour}` : hour;
+    hour = hour < 10 ? `0${hour}` : hour;
     let minutes = today.getMinutes();
     minutes = minutes < 10 ? `0${minutes}` : minutes;
     let seconds = today.getSeconds();
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     let day = today.getDate();
-    day = day.length < 10 ? `0${day}` : day;
+    day = day < 10 ? `0${day}` : day;
     let month = today.getMonth() + 1;
     month = month < 10 ? `0${month}` : month;
     const year = today.getFullYear();
 
     if (this.isTimeVisible) {
       const time = this.shadow.querySelector('.hour');
-      time.textContent = `${hour}:${minutes}:${seconds}`;
+      const format = getSettingValue(findSetting('topbar-time-format'))
+      if (format === 'hh') {
+        time.textContent = `${hour}`;  
+      } else if (format === 'hh:mm') {
+        time.textContent = `${hour}:${minutes}`;
+      } else if (format === 'hh:mm:ss' || format === null) {
+        time.textContent = `${hour}:${minutes}:${seconds}`;
+      }
     }
 
     if (this.isDateVisible) {
