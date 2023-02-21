@@ -89,6 +89,15 @@ const settings = [
         value: true
       },
       {
+        name: 'Ping domain',
+        dependsOn: 'topbar-show-ping',
+        dependsOnValue: true,
+        localStorageKey: 'topbar-ping-domain',
+        id: 'topbar-ping-domain',
+        type: 'text',
+        value: 'https://jsonplaceholder.typicode.com/todos/1'
+      },
+      {
         name: 'Show vibration status',
         localStorageKey: 'topbar-show-vibration-status',
         id: 'topbar-show-vibration-status',
