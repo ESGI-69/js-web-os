@@ -120,7 +120,12 @@ const getSettingValue = (setting) => {
       return setting.value;
     }
     return settingValue;
-  } else {
+  } else if (setting.type === 'text') {
+    if (settingValue === null) {
+      return setting.value;
+    }
+    return settingValue;
+  } else if (setting.type === 'checkbox') {
     if (settingValue === null) {
       return setting.value;
     }
