@@ -36,7 +36,7 @@ class appSettings extends HTMLElement {
             </div>
           </div>
           `;
-        } else if (setting.type === 'text') {
+        } else if (setting.type === 'text' || setting.type === 'number') {
           html += `
               <input type="${setting.type}" name="${setting.localStorageKey}" value="${getSettingValue(setting)}">  
             </div>
@@ -90,7 +90,7 @@ class appSettings extends HTMLElement {
         settingValue.addEventListener('change', (event) => {
           if (setting.type === 'checkbox') {
             this.changeSettingValue(setting, event.target.checked);
-          } else if (setting.type === 'text') {
+          } else if (setting.type === 'text' || setting.type === 'number') {
             this.changeSettingValue(setting, event.target.value);
           } else if (setting.type === 'select') {
             this.changeSettingValue(setting, event.target.value);

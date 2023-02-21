@@ -129,7 +129,7 @@ const getSettingValue = (setting) => {
       return setting.value;
     }
     return settingValue;
-  } else if (setting.type === 'text') {
+  } else if (setting.type === 'text' || setting.type === 'number') {
     if (settingValue === null) {
       return setting.value;
     }
