@@ -171,7 +171,7 @@ class appWrapper extends HTMLElement {
 
   vibrate() {
     if (navigator.vibrate) {
-      vibrationDuration = getSettingValue(findSetting('os-vibration-duration'));
+      const vibrationDuration = getSettingValue(findSetting('os-vibration-duration'));
       if (getSettingValue(findSetting('os-vibration'))) {
         console.log('vibrating');
         navigator.vibrate(vibrationDuration);
