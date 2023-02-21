@@ -1,12 +1,5 @@
 import BatteryEmptyIcon from '../assets/images/icons/battery-empty.svg';
-import BatteryFullIcon from '../assets/images/icons/battery-full.svg';
-import BatteryHalfIcon from '../assets/images/icons/battery-half.svg';
 import BatteryQuarterIcon from '../assets/images/icons/battery-quarter.svg';
-import BatteryThreeQuartersIcon
-  from '../assets/images/icons/battery-three-quarters.svg';
-import BellSlashIcon from '../assets/images/icons/bell-slash.svg';
-import BellIcon from '../assets/images/icons/bell.svg';
-import BoltIcon from '../assets/images/icons/bolt.svg';
 import {
   findSetting,
   getSettingValue,
@@ -38,14 +31,22 @@ class Topbar extends HTMLElement {
       if (event.detail.setting === 'topbar-show-time') {
         this.isTimeVisible = event.detail.value;
         applyChanges();
+      } else if (event.detail.setting === 'topbar-time-format') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-vibration-status') {
         this.isVibrationVisible = event.detail.value;
         applyChanges();
       } else if (event.detail.setting === 'topbar-show-date') {
         this.isDateVisible = event.detail.value;
         applyChanges();
+      } else if (event.detail.setting === 'topbar-date-format') {
+        applyChanges();
       } else if (event.detail.setting === 'topbar-show-ping') {
         this.isPingVisible = event.detail.value;
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-ping-domain') {
+        applyChanges();
+      } else if (event.detail.setting === 'topbar-ping-interval') {
         applyChanges();
       } else if (event.detail.setting === 'topbar-show-battery') {
         this.isBatteryVisible = event.detail.value;
@@ -64,33 +65,49 @@ class Topbar extends HTMLElement {
   updateTime() {
     const today = new Date();
     let hour = today.getHours();
-    hour = hour.length < 10 ? `0${hour}` : hour;
+    hour = hour < 10 ? `0${hour}` : hour;
     let minutes = today.getMinutes();
     minutes = minutes < 10 ? `0${minutes}` : minutes;
     let seconds = today.getSeconds();
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     let day = today.getDate();
-    day = day.length < 10 ? `0${day}` : day;
+    day = day < 10 ? `0${day}` : day;
     let month = today.getMonth() + 1;
     month = month < 10 ? `0${month}` : month;
     const year = today.getFullYear();
 
     if (this.isTimeVisible) {
       const time = this.shadow.querySelector('.hour');
-      time.textContent = `${hour}:${minutes}:${seconds}`;
+      const format = getSettingValue(findSetting('topbar-time-format'))
+      if (format === 'hh') {
+        time.textContent = `${hour}`;  
+      } else if (format === 'hh:mm') {
+        time.textContent = `${hour}:${minutes}`;
+      } else if (format === 'hh:mm:ss' || format === null) {
+        time.textContent = `${hour}:${minutes}:${seconds}`;
+      }
     }
 
     if (this.isDateVisible) {
       const date = this.shadow.querySelector('.date');
-      date.textContent = `${day}/${month}/${year}`;
+      const format = getSettingValue(findSetting('topbar-date-format'))
+      if (format === 'dd') {
+        date.textContent = `${day}`;
+      } else if (format === 'dd/mm') {
+        date.textContent = `${day}/${month}`;
+      } else if (format === 'dd/mm/yyyy' || format === null) {
+        date.textContent = `${day}/${month}/${year}`;
+      }
     }
   }
 
   checkPing() {
     if (this.isPingVisible) {
+      const interval = getSettingValue(findSetting('topbar-ping-interval'));
       this.pingInterval = setInterval(() => {
         const timeStart = Date.now();
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
+        const pingDomain = getSettingValue(findSetting('topbar-ping-domain'));
+        fetch(pingDomain)
           .then((response) => response.json())
           .then(() => {
             const timeEnd = Date.now();
@@ -105,7 +122,7 @@ class Topbar extends HTMLElement {
               ping.textContent = `${Math.round(averageResponseTime)} ms`;
             }
           });
-      }, 1000);
+      }, interval * 1000);
     } else if (this.pingInterval) {
       clearInterval(this.pingInterval);
     }
@@ -118,13 +135,13 @@ class Topbar extends HTMLElement {
       const changeBatteryLevel = (level, isCharging) => {
         let innerHTML = `${Math.round(level * 100)}%`;
         if (isCharging) {
-          innerHTML += `<img src="${BoltIcon}">`;
+          innerHTML += `<icon-bolt></icon-bolt>`;
         } else if (level >= 0.75) {
-          innerHTML += `<img src="${BatteryFullIcon}">`;
+          innerHTML += `<icon-battery-full></icon-battery-full>`;
         } else if (level >= 0.5) {
-          innerHTML += `<img src="${BatteryThreeQuartersIcon}">`;
+          innerHTML += `<icon-battery-three-quarters></icon-battery-three-quarters>`;
         } else if (level >= 0.25) {
-          innerHTML += `<img src="${BatteryHalfIcon}">`;
+          innerHTML += `<icon-battery-half></icon-battery-half>`;
         } else if (level >= 0.1) {
           innerHTML += `<img src="${BatteryQuarterIcon}">`;
         } else {
@@ -144,7 +161,7 @@ class Topbar extends HTMLElement {
       });
     } else {
       console.warn('Battery API not supported');
-      batteryLevel.innerHTML = `--- <img src="${BatteryHalfIcon}">`;
+      batteryLevel.innerHTML = `--- <icon-battery-half></icon-battery-half>`;
     }
   }
 
@@ -169,9 +186,9 @@ class Topbar extends HTMLElement {
       const vibration = document.createElement('span');
       vibration.classList.add('vibration');
       if (getSettingValue(findSetting('os-vibration'))) {
-        vibration.innerHTML = `<img src="${BellIcon}">`;
+        vibration.innerHTML = `<icon-bell></icon-bell>`;
       } else {
-        vibration.innerHTML = `<img src="${BellSlashIcon}">`;
+        vibration.innerHTML = `<icon-bell-slash></icon-bell-slash>`;
       }
       left.append(vibration);
     }
@@ -207,7 +224,7 @@ class Topbar extends HTMLElement {
     this.shadow.innerHTML = `
       <style>
         :host {
-          color: #fff;
+          color: var(--color-text);
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           grid-template-rows: 1fr;
@@ -217,7 +234,7 @@ class Topbar extends HTMLElement {
           padding: 0 1rem;
           height: 30px;
 
-          background: rgba(0, 0, 0, 0.6);
+          background: var(--color-topbar-background);
           backdrop-filter: blur(10px);
 
           font-size: 0.8rem;

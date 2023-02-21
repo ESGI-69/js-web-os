@@ -171,9 +171,10 @@ class appWrapper extends HTMLElement {
 
   vibrate() {
     if (navigator.vibrate) {
+      vibrationDuration = getSettingValue(findSetting('os-vibration-duration'));
       if (getSettingValue(findSetting('os-vibration'))) {
         console.log('vibrating');
-        navigator.vibrate(100);
+        navigator.vibrate(vibrationDuration);
       }
     } else {
       console.log('vibration not supported');
@@ -233,11 +234,12 @@ class appWrapper extends HTMLElement {
           display: grid;
           padding: 1rem;
           margin: auto;
-          background-color: #1c1c1c;
+          // background-color: #1c1c1c;
+          background-color: var(--color-background);
           font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
           font-size: 1rem;
           line-height: 1.2;
-          color: #fff;
+          color: var(--color-text);
           -webkit-font-smoothing: antialiased;
         }
         :host * {
@@ -271,8 +273,8 @@ class appWrapper extends HTMLElement {
           outline: 0;
           width: 100%;
           height: 100%;
-          background-color: #333;
-          color: #fff;
+          background-color: var(--color-background-light);
+          color: var(--color-text);
           font-size: 2rem;
           line-height: 100%;
           border-radius: 200px;
