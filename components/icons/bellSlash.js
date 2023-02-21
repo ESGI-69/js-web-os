@@ -11,6 +11,11 @@ class BellSlashIcon extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
       <style>
+        :host {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         :host svg path {
           fill: var(--color-text);
         }
