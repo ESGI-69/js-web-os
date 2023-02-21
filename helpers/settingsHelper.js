@@ -52,6 +52,29 @@ const settings = [
         value: true
       },
       {
+        name: 'Time format',
+        dependsOn: 'topbar-show-time',
+        dependsOnValue: true,
+        localStorageKey: 'topbar-time-format',
+        id: 'topbar-time-format',
+        type: 'select',
+        options: [
+          {
+            name: 'hh:mm:ss',
+            value: 'hh:mm:ss',
+          },
+          {
+            name: 'hh:mm',
+            value: 'hh:mm',
+          },
+          {
+            name: 'hh',
+            value: 'hh',
+          },
+        ],
+        value: 'hh:mm:ss',
+      },
+      {
         name: 'Show battery',
         localStorageKey: 'topbar-show-battery',
         id: 'topbar-show-battery',
