@@ -10,13 +10,7 @@ class appTictactoe extends HTMLElement {
     this.player = 'X';
     this.computer = 'O';
     this.board = ['', '', '', '', '', '', '', '', ''];
-    // this.scores = {
-    //   player: 0,
-    //   computer: 0,
-    //   draw: 0
-    // };
-    //store the scores in local storage
-    this.scores = JSON.parse(localStorage.getItem('scores')) || {
+    this.scores = JSON.parse(localStorage.getItem('tictactoe-scores')) || {
       player: 0,
       computer: 0,
       draw: 0
@@ -228,11 +222,11 @@ class appTictactoe extends HTMLElement {
         this.gameOver = true;
         if (this.board[a] === this.player) {
           this.scores.player++;
-          localStorage.setItem('scores', JSON.stringify(this.scores));
+          localStorage.setItem('tictactoe-scores', JSON.stringify(this.scores));
           alert('You win!');
         } else {
           this.scores.computer++;
-          localStorage.setItem('scores', JSON.stringify(this.scores));
+          localStorage.setItem('tictactoe-scores', JSON.stringify(this.scores));
           alert('You lose!');
         }
         this.render();
