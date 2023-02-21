@@ -231,7 +231,7 @@ class Topbar extends HTMLElement {
     this.shadow.innerHTML = `
       <style>
         :host {
-          color: #fff;
+          color: var(--color-text);
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           grid-template-rows: 1fr;
@@ -241,7 +241,7 @@ class Topbar extends HTMLElement {
           padding: 0 1rem;
           height: 30px;
 
-          background: rgba(0, 0, 0, 0.6);
+          background: var(--color-topbar-background);
           backdrop-filter: blur(10px);
 
           font-size: 0.8rem;
