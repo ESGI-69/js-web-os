@@ -33,6 +33,16 @@ class appTictactoe extends HTMLElement {
           margin-top: 20px;
         }
 
+        :host .pop-up {
+          position: fixed;
+          background: white;
+          width: 100%;
+          text-align: center;
+          border: 2px solid grey;
+          margin: -19px 8px 0 8px;
+          display: none;
+        }
+
         :host h1 {
           font-family: 'Pacifico',serif;
           text-align: center;
@@ -47,8 +57,6 @@ class appTictactoe extends HTMLElement {
           right: 0;
           background: rgba(0, 0, 0, 0.7);
           transition: opacity 500ms;
-          // visibility: hidden;
-          // opacity: 0;
         }
 
         :host .choose-symbol {
@@ -131,6 +139,15 @@ class appTictactoe extends HTMLElement {
       </style>
 
       <div class="main">
+        <div class="pop-up pop-up-win">
+          <p>You win ! </p>
+        </div>
+        <div class="pop-up pop-up-lose">
+          <p>You lose ! </p>
+        </div>
+        <div class="pop-up pop-up-draw">
+          <p>Draw ! </p>
+        </div>
         <h1>Tic Tac Toe</h1>
         <div class="overlay">
           <div class="choose-symbol">
@@ -223,13 +240,22 @@ class appTictactoe extends HTMLElement {
         if (this.board[a] === this.player) {
           this.scores.player++;
           localStorage.setItem('tictactoe-scores', JSON.stringify(this.scores));
-          alert('You win!');
+          this.shadow.querySelector('.pop-up-win').style.display = "block";
+          setTimeout(() => {
+            this.shadow.querySelector('.pop-up-win').style.display = "none";
+          }, 2000);
         } else {
           this.scores.computer++;
           localStorage.setItem('tictactoe-scores', JSON.stringify(this.scores));
-          alert('You lose!');
+          this.shadow.querySelector('.pop-up-lose').style.display = "block";
+          setTimeout(() => {
+            this.shadow.querySelector('.pop-up-lose').style.display = "none";
+          }, 2000);
         }
-        this.render();
+        setTimeout(() => {
+          this.render();
+        }, 3000);
+
         return;
       }
     }
@@ -237,7 +263,10 @@ class appTictactoe extends HTMLElement {
       this.gameOver = true;
       this.scores.draw++;
       localStorage.setItem('scores', JSON.stringify(this.scores));
-      alert('Draw!');
+      this.shadow.querySelector('.pop-up-draw').style.display = "block";
+      setTimeout(() => {
+        this.shadow.querySelector('.pop-up-draw').style.display = "none";
+      }, 2000);
       this.render();
     }
   }
