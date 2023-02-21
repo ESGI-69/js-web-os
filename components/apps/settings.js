@@ -1,4 +1,5 @@
 import {
+  findSetting,
   getSettingValue,
   settings,
 } from '../../helpers/settingsHelper';
@@ -18,15 +19,44 @@ class appSettings extends HTMLElement {
           <div class="settings">
       `;
       category.settings.forEach((setting) => {
+        if (setting.dependsOn
+          && getSettingValue(findSetting(setting.dependsOn)) !== setting.dependsOnValue) {
+          return;
+        }
+        const isSettingDependent = setting.dependsOn ? true : false;
         html += `
-          <div class="setting">
+          <div class="setting ${isSettingDependent ? 'dependent' : ''}">
             <div class="setting-name">${setting.name}</div>
             <div class="setting-value" id="${setting.id}">
+        `;
+        if (setting.type === 'checkbox') {
+          html += `
               <input type="${setting.type}" name="${setting.localStorageKey}" ${getSettingValue(setting) ? 'checked' : ''}>  
               <label for="${setting.localStorageKey}"></label>
             </div>
           </div>
-        `;
+          `;
+        } else if (setting.type === 'text') {
+          html += `
+              <input type="${setting.type}" name="${setting.localStorageKey}" value="${getSettingValue(setting)}">  
+            </div>
+          </div>
+          `;
+        } else if (setting.type === 'select') {
+          html += `
+              <select name="${setting.localStorageKey}">
+          `;
+          setting.options.forEach((option) => {
+            html += `
+              <option value="${option.value}" ${getSettingValue(setting) === option.value ? 'selected' : ''}>${option.name}</option>
+            `;
+          });
+          html += `
+              </select>
+            </div>
+          </div>
+          `;
+        }
       });
       html += `
           </div>
@@ -45,14 +75,27 @@ class appSettings extends HTMLElement {
         value: value,
       },
     }));
+
+    this.render();
   }
 
   defineEventListeners() {
     settings.forEach((category) => {
       category.settings.forEach((setting) => {
+        if (setting.dependsOn
+          && getSettingValue(findSetting(setting.dependsOn)) !== setting.dependsOnValue) {
+          return;
+        }
         const settingValue = this.shadow.querySelector(`#${setting.id}`);
         settingValue.addEventListener('change', (event) => {
-          this.changeSettingValue(setting, event.target.checked);
+          console.log('change', setting.name, event);
+          if (setting.type === 'checkbox') {
+            this.changeSettingValue(setting, event.target.checked);
+          } else if (setting.type === 'text') {
+            this.changeSettingValue(setting, event.target.value);
+          } else if (setting.type === 'select') {
+            this.changeSettingValue(setting, event.target.value);
+          }
         });
       });
     });
@@ -60,7 +103,6 @@ class appSettings extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.defineEventListeners();
   }
 
   render() {
@@ -100,6 +142,9 @@ class appSettings extends HTMLElement {
           padding: 0.5rem;
           border-bottom: 1px solid var(--color-background-lighter);
         }
+        :host .category .settings .setting.dependent {
+          padding-left: 1.5rem;
+        }
         :host .category .settings .setting:last-child {
           border-bottom: none;
         }
@@ -107,6 +152,7 @@ class appSettings extends HTMLElement {
       <h1>Settings</h1>
       ${this.generateSettings(settings)}
     `;
+    this.defineEventListeners();
   }
 }
 
