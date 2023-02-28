@@ -7,6 +7,7 @@
 - WebAPI:
   - Vibration API
   - Battery Status API
+  - Device orientation events
 
 ## Developpement :
 
