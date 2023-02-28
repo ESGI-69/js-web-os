@@ -13,7 +13,8 @@ class Dock extends HTMLElement {
       const app = this.shadow.getElementById(appId)
       app.addEventListener('click', () => {
         document.dispatchEvent(new CustomEvent('open-app', { detail: {
-          id: appId
+          id: appId,
+          pushHistory: true,
         }}));
       });
     }
