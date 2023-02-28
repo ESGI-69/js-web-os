@@ -71,6 +71,10 @@ class appWrapper extends HTMLElement {
           display: block;
           box-sizing: border-box;
         }
+        :host #app > * {
+          max-width: 100%;
+          overflow-y: auto;
+        }
         :host #close {
           all: unset;
           position: absolute;
