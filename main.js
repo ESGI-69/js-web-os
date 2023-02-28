@@ -15,6 +15,7 @@ import './components/icons/bellSlash';
 import './components/icons/batteryThreeQuarters';
 import './components/icons/batteryHalf';
 import './components/icons/batteryFull';
+import './helpers/backgroundAnimation';
 
 import backgroundImage from './assets/images/background.jpg';
 import {
