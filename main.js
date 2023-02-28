@@ -59,5 +59,9 @@ const setTheme = (theme) => {
   }
 };
 
+if ('Notification' in window) {
+  const permission = await Notification.requestPermission();
+}
+
 // Set theme on load
 setTheme(getSettingValue(findSetting('os-theme')));
