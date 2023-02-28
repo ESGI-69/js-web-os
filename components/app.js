@@ -6,6 +6,17 @@ class App extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    document.addEventListener('lock', () => {
+      this.shadow.innerHTML+="<os-lock-screen></os-lock-screen>"
+    });
+
+    // this.shadow.querySelector('#lock').addEventListener('click', () => {
+    //   document.dispatchEvent(new CustomEvent('lock'));
+    // });
+
+    document.addEventListener('unlock', () => {
+      this.shadow.querySelector('os-lock-screen').remove();
+    });
   }
 
   render() {
@@ -22,6 +33,7 @@ class App extends HTMLElement {
       <os-home-screen></os-home-screen>
       <os-dock class="dock"></os-dock>
       <os-app-wrapper></os-app-wrapper>
+      <os-lock-screen></os-lock-screen>
     `;
   }
 }
