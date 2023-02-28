@@ -18,6 +18,12 @@ class Dock extends HTMLElement {
         }}));
       });
     }
+
+    this.shadow.querySelector('#lock').addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('lock'));
+    }
+    );
+
   }
 
   disconnectedCallback() {
@@ -38,6 +44,7 @@ class Dock extends HTMLElement {
         }
       </style>
       ${this.iconsInDock}
+      <img id="lock" src="./assets/images/app-icons/lock.png" width=50px height=50px>
     `;
   }
 
