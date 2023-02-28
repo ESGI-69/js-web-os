@@ -16,6 +16,12 @@
   - URL
   - File Reader
 
+### Fonctionnalités bonus :
+- Sauvegarde et restauration des parramètres de l'utilisateur
+- Solution de déploiement continue
+- Utilisation l'API web Notification
+- Systeme de routing avec l'API History (back, forward, reload)
+
 ## Developpement :
 
 ### Comment Créer une nouvelle application :
