@@ -1,6 +1,8 @@
 import {
+  downloadLocalStorage,
   findSetting,
   getSettingValue,
+  importLocalStorage,
   settings,
 } from '../../helpers/settingsHelper';
 
@@ -8,6 +10,8 @@ class appSettings extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: 'open' });
+    this.exportButton;
+    this.importButton;
   }
 
   generateSettings(settings) {
@@ -116,6 +120,28 @@ class appSettings extends HTMLElement {
 
   connectedCallback() {
     this.render();
+
+    this.exportButton = this.shadow.getElementById('export');
+    this.importButton = this.shadow.getElementById('import');
+
+    this.exportButton.addEventListener('click', () => {
+      downloadLocalStorage();
+    });
+
+    this.importButton.addEventListener('click', () => {
+      console.log('import');
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = '.json';
+      document.body.appendChild(fileInput);
+      fileInput.click();
+      fileInput.addEventListener('change', (event) => {
+        importLocalStorage(event.target.files[0]);
+        event.target.files[0].text().then(c => console.log(c));
+        fileInput.remove();
+        this.render.bind(this);
+      });
+    });
   }
 
   render() {
@@ -163,6 +189,8 @@ class appSettings extends HTMLElement {
         }
       </style> 
       <h1>Settings</h1>
+      <button id="export">Export</button>
+      <button id="import">Import</button>
       ${this.generateSettings(settings)}
     `;
     this.defineEventListeners();
