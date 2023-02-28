@@ -1,3 +1,8 @@
+import { 
+  findSetting,
+  getSettingValue
+} from "../helpers/settingsHelper";
+
 class LockScreen extends HTMLElement {
   constructor() {
     super();
@@ -16,6 +21,24 @@ class LockScreen extends HTMLElement {
 
   unlock() {
     this.remove();
+  }
+
+  generateHtmlWithSettings() {
+    const method = getSettingValue(findSetting('lockscreen-method'));
+    if (method === 'none') {
+      return `
+      <div id="container">
+        <div id="slider">
+          <img id="unlock" src="./assets/images/app-icons/unlock.svg">
+        </div>
+        <p>Slide to unlock</p>
+      </div>
+      `;
+    } else if (method === 'password') {
+      return `
+      <div id="slider">test<img id="unlock" src="./assets/images/app-icons/unlock.svg"></div>
+      `;
+    }
   }
 
   render() {
@@ -102,12 +125,7 @@ class LockScreen extends HTMLElement {
         }
 
       </style>
-      <div id="container">
-        <div id="slider">
-          <img id="unlock" src="./assets/images/app-icons/unlock.svg">
-        </div>
-        <p>Slide to unlock</p>
-      </div>
+      ${this.generateHtmlWithSettings()}
     `;
   }
 }
