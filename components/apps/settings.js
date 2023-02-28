@@ -155,6 +155,18 @@ class appSettings extends HTMLElement {
           padding: 1rem;
           gap: 1rem;
         }
+        :host > button {
+          background-color: var(--color-background-light);
+          border: none;
+          border-radius: 0.5rem;
+          padding: 0.5rem;
+          cursor: pointer;
+          color: var(--color-text);
+          font-size: 1rem;
+        }
+        :host > button:hover {
+          background-color: var(--color-background-lighter);
+        }
         :host h1 {
           font-size: 2rem;
           font-weight: bold;
