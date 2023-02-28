@@ -70,6 +70,7 @@ class appWrapper extends HTMLElement {
           height: 100%;
           display: block;
           box-sizing: border-box;
+          background-color: var(--color-background);
         }
         :host #app > * {
           max-width: 100%;
