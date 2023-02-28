@@ -70,6 +70,9 @@ class TabTimer extends HTMLElement {
         this.playButton.innerHTML = 'Start';
         this.isPlay = false;
         this.vibrate();
+
+        new Notification("Timer ended !!!");
+
         setTimeout(() => {
           this.reset();
         }, 1000);
