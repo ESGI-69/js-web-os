@@ -9,14 +9,6 @@ class App extends HTMLElement {
     document.addEventListener('lock', () => {
       this.shadow.innerHTML+="<os-lock-screen></os-lock-screen>"
     });
-
-    // this.shadow.querySelector('#lock').addEventListener('click', () => {
-    //   document.dispatchEvent(new CustomEvent('lock'));
-    // });
-
-    document.addEventListener('unlock', () => {
-      this.shadow.querySelector('os-lock-screen').remove();
-    });
   }
 
   render() {
