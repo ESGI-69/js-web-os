@@ -216,7 +216,7 @@ class TabStopwatch extends HTMLElement {
           flex-direction: column;
           padding: 0;
           margin: 0;
-          height: 40vh;
+          height: 35vh;
         }
 
         :host .laps::-webkit-scrollbar {
