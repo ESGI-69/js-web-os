@@ -20,7 +20,8 @@ export default {
           return 'assets/[name]-[hash][extname]';
         },
       },
-    }
+    },
+    target: 'esnext',
   },
   server: {
     port: 8081,
