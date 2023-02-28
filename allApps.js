@@ -1,6 +1,5 @@
 import calculatorIcon from './assets/images/app-icons/calculator.png';
 import clockIcon from './assets/images/app-icons/clock.png';
-import messagesIcon from './assets/images/app-icons/messages.png';
 import settingsIcon from './assets/images/app-icons/settings.png';
 import tictactoeIcon from './assets/images/app-icons/tictactoe.png';
 
@@ -12,13 +11,13 @@ export default [
     tag: 'os-app-calculator',
     isInDock: true,
   },
-  {
-    name: 'Messages',
-    icon: messagesIcon,
-    id: 'messages',
-    tag: 'os-app-message',
-    isInDock: true,
-  },
+  // {
+  //   name: 'Messages',
+  //   icon: messagesIcon,
+  //   id: 'messages',
+  //   tag: 'os-app-message',
+  //   isInDock: true,
+  // },
   {
     name: 'Settings',
     icon: settingsIcon,
