@@ -17,14 +17,10 @@ import './components/icons/batteryHalf';
 import './components/icons/batteryFull';
 import './helpers/backgroundAnimation';
 
-import backgroundImage from './assets/images/background.jpg';
 import {
   findSetting,
   getSettingValue,
 } from './helpers/settingsHelper';
-
-const app = document.querySelector('body');
-app.style.backgroundImage = `url(${backgroundImage})`;
 
 // Handle theme change
 document.addEventListener('changeSetting', (event) => {

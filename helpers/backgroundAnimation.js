@@ -1,5 +1,9 @@
+import backgroundImage from '../assets/images/background.jpg';
+
 // Sensor API Background
-var background = document.getElementById("background");
+let background = document.getElementById("background");
+
+background.src= `${backgroundImage}`;
 
 let x = 0;
 let y = 0;
@@ -7,16 +11,18 @@ let y = 0;
 window.addEventListener("deviceorientation", handleOrientation, true);
 
 function handleOrientation(event) {
-  const gamma = event.gamma;
-  const beta = event.beta;
+  // gamma = de gauche à droite
+  // beta = de haut en bas
+  let gamma = event.gamma;
+  let beta = event.beta;
 
   // Convertir l'angle en radians
-  const radGamma = gamma * Math.PI / 180;
-  const radBeta = beta * Math.PI / 180;
+  let radGamma = gamma * Math.PI / 180;
+  let radBeta = beta * Math.PI / 180;
 
   // Déplacer l'image de fond en fonction de l'orientation
   x = -radGamma * 10;
   y = -radBeta * 10;
 
-  background.style.backgroundPosition = x + "px " + y + "px";
+  background.style.transform = "translate(" + x + "px, " + y + "px)";
 }
