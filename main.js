@@ -4,6 +4,10 @@ import './components/topbar';
 import './components/appIcon';
 import './components/homeSceen';
 import './components/apps/appWrapper';
+import './components/apps/clock';
+import './components/apps/clock/main';
+import './components/apps/clock/stopwatch';
+import './components/apps/clock/timer';
 import './components/apps/calulator';
 import './components/apps/message';
 import './components/apps/settings';
@@ -16,6 +20,9 @@ import './components/icons/batteryThreeQuarters';
 import './components/icons/batteryHalf';
 import './components/icons/batteryFull';
 import './helpers/backgroundAnimation';
+import './components/icons/clock';
+import './components/icons/stopwatch';
+import './components/icons/hourglass';
 
 import {
   findSetting,
@@ -51,6 +58,10 @@ const setTheme = (theme) => {
 
   }
 };
+
+if ('Notification' in window) {
+  const permission = await Notification.requestPermission();
+}
 
 // Set theme on load
 setTheme(getSettingValue(findSetting('os-theme')));

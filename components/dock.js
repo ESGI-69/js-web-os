@@ -56,7 +56,6 @@ class Dock extends HTMLElement {
   get idInDock() {
     const dockIcons = allApps.filter((app) => app.isInDock);
     const appIds = dockIcons.map((app) => app.id);
-    // console.log(appIds);
     return appIds;
   }
 }

@@ -8,6 +8,7 @@
   - Vibration API
   - Battery Status API
   - Device orientation events
+  - Notification API
 
 ## Developpement :
 
