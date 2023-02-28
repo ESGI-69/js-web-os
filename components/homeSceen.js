@@ -23,7 +23,8 @@ class HomeScreen extends HTMLElement {
       const appElement = this.shadow.getElementById(appId)
       appElement.addEventListener('click', () => {
         document.dispatchEvent(new CustomEvent('open-app', { detail: {
-          id: appId
+          id: appId,
+          pushHistory: true,
         }}));
       });
     }
