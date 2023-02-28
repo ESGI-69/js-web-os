@@ -152,6 +152,18 @@ const settings = [
         value: null,
       },
     ],
+  },
+  {
+    categoryName: 'Clock',
+    settings: [
+      {
+        name: 'Play sound when time is up',
+        localStorageKey: 'clock-play-sound',
+        id: 'clock-play-sound',
+        type: 'checkbox',
+        value: true
+      },
+    ],
   }
 ];
 
