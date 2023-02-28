@@ -4,11 +4,17 @@
 - Applcations:
   - Calculatrice
 
-- WebAPI:
+- API, Constructeurs et Interfaces:
   - Vibration API
   - Battery Status API
   - Device orientation events
   - Notification API
+  - Custom Elements
+  - Custom Event
+  - Mutation Observer
+  - Local Storage
+  - URL
+  - File Reader
 
 ## Developpement :
 
