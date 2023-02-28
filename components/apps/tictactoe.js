@@ -26,7 +26,6 @@ class appTictactoe extends HTMLElement {
           display: flex;
           flex-direction: column;
           align-items: center;
-          background-color: var(--color-background);
           color: var(--color-text);
           height: 100%;
         }
@@ -110,6 +109,7 @@ class appTictactoe extends HTMLElement {
 
         :host .board {
           width: 80%;
+          min-height: 80vw;
           aspect-ratio : 1 / 1;
           margin: 0 auto;
           background-color: #34495e;
@@ -124,6 +124,7 @@ class appTictactoe extends HTMLElement {
         @media (min-width: 780px) {
           :host .board {
             width: 40%;
+            height: 40vw;
           }
         }
 
