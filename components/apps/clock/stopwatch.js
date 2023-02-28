@@ -29,7 +29,6 @@ class TabStopwatch extends HTMLElement {
     this.centiSecond = this.shadow.querySelector(".msec");
     this.laps = this.shadow.querySelector(".laps");
     this.clearAllBtn = this.shadow.querySelector(".lap-clear-btn");
-    this.bg = this.shadow.querySelector(".outer-circle");
 
     this.playBtn.addEventListener("click", this.play.bind(this))
     this.resetBtn.addEventListener("click", this.reset.bind(this))
@@ -59,33 +58,31 @@ class TabStopwatch extends HTMLElement {
 
     if (!this.isPlay) {
       this.playBtn.innerHTML = "Pause"
-      this.bg.classList.add("animation-bg")
       this.min = setInterval(() => {
         ++this.minCounter
         if (this.minCounter === 60) {
           this.minCounter = 0;
         }
-        this.minute.innerHTML = `${this.minCounter.toString().padStart(2, '0')} :`;
+        this.minute.innerHTML = `${this.minCounter.toString().padStart(2, '0')}:`;
       }, 60000);
       this.sec = setInterval(() => {
         ++this.secCounter
         if (this.secCounter === 60) {
           this.secCounter = 0;
         }
-        this.second.innerHTML = `&nbsp;${this.secCounter.toString().padStart(2, '0')} :`;
+        this.second.innerHTML = `${this.secCounter.toString().padStart(2, '0')}:`;
       }, 1000);
       this.centiSec = setInterval(() => {
         ++this.centiCounter
         if (this.centiCounter === 100) {
           this.centiCounter = 0;
         }
-        this.centiSecond.innerHTML = `&nbsp;${this.centiCounter.toString().padStart(2, '0')}`;
+        this.centiSecond.innerHTML = `${this.centiCounter.toString().padStart(2, '0')}`;
       }, 10);
       this.isPlay = true
       // isReset = true
     } else {
       this.playBtn.innerHTML = "Play"
-      this.bg.classList.remove("animation-bg")
       clearInterval(this.min)
       clearInterval(this.sec)
       clearInterval(this.centiSec)
@@ -104,9 +101,11 @@ class TabStopwatch extends HTMLElement {
     this.centiCounter = 0
     this.lapBtn.classList.add("hidden")
     this.resetBtn.classList.add("hidden")
-    this.minute.innerHTML = `00 : `
-    this.second.innerHTML = `&nbsp;00 :`
-    this.centiSecond.innerHTML = `&nbsp;00`
+    this.minute.innerHTML = `00:`
+    this.second.innerHTML = `00:`
+    this.centiSecond.innerHTML = `00`
+    this.laps.innerHTML = ""
+    this.clearAllBtn.classList.add("hidden")
   }
 
   lap() {
@@ -120,7 +119,7 @@ class TabStopwatch extends HTMLElement {
     timeStamp.setAttribute("class", "time-stamp")
     
     number.innerHTML = `#${++this.lapId}`
-    timeStamp.innerHTML = `${this.minCounter.toString().padStart(2, '0')} : ${this.secCounter.toString().padStart(2, '0')} : ${this.centiCounter.toString().padStart(2, '0')}`
+    timeStamp.innerHTML = `${this.minCounter.toString().padStart(2, '0')}:${this.secCounter.toString().padStart(2, '0')} :${this.centiCounter.toString().padStart(2, '0')}`
     
     li.append(number, timeStamp)
     this.laps.append(li)
@@ -140,11 +139,22 @@ class TabStopwatch extends HTMLElement {
     this.shadow.innerHTML = `
       <style>
         :host {
-          display: flex;
-          flex-direction: column;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto 1fr auto;
           align-items: center;
           gap: 1rem;
           background: var(--color-background);
+          width: 100%;
+          height: 100%;
+          padding: 1rem;
+          box-sizing: border-box;
+        }
+
+        :host h1 {
+          width: 100%;
+          margin: 0;
+          color: var(--color-text);
         }
 
         :host .watch {
@@ -155,59 +165,21 @@ class TabStopwatch extends HTMLElement {
           row-gap: 20px;
         }
 
-        :host .outer-circle {
-          width: 230px;
-          height: 230px;
-          border-radius: 50%;
-          background-color: var(--color-text);
+        :host .circle {
+          width: 300px;
+          height: 300px;
           display: flex;
           justify-content: center;
           align-items: center;
-        }
-
-        :host .animation-bg {
-          background: linear-gradient(-45deg, #ee7752, orange, #e73c7e, #23a6d5, #23d5ab);
-          background-size: 400% 400%;
-          animation: gradient 7s ease infinite;
-        }
-
-        @keyframes gradient {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        :host .inner-circle {
-          width: 210px;
-          height: 210px;
+          background: #ececec;
           border-radius: 50%;
-          background-color: var(--color-background);
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          border: 14px solid #333;
+          box-shadow: 0 2vw 4vw -1vw rgb(0 0 0 / 80%);
         }
 
         :host .text {
-          color: var(--color-text);
-          font-size: 23px;
-        }
-
-        :host .min {
-          font-size: 43px;
-        }
-
-        :host .sec {
-          font-size: 34px;
-        }
-
-        :host .msec {
-          font-size: 23px;
+          font-size: 3rem;
+          font-weight: 700;
         }
 
         :host .btn-wrapper {
@@ -237,7 +209,6 @@ class TabStopwatch extends HTMLElement {
         :host .laps {
           list-style: none;
           color: var(--color-text);
-          height: 250px;
           width: 100%;
           overflow: auto;
           display: flex;
@@ -245,6 +216,7 @@ class TabStopwatch extends HTMLElement {
           flex-direction: column;
           padding: 0;
           margin: 0;
+          height: 40vh;
         }
 
         :host .laps::-webkit-scrollbar {
@@ -254,21 +226,20 @@ class TabStopwatch extends HTMLElement {
         :host .lap-item {
           display: inline-flex;
           padding: 0.75rem;
-          border: 1px solid #444;
+          border: 3px solid var(--color-text);
           border-radius: 50px;
           justify-content: space-between;
           gap: 1rem;
         }
 
         :host .number {
-          color: #ccc;
+          color: var(--color-text);
         }
 
         :host .lap-clear-btn {
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 130px;
           padding: 10px 0;
           border-radius: 50px;
           background-color: var(--color-text);
@@ -279,13 +250,12 @@ class TabStopwatch extends HTMLElement {
           visibility: hidden;
         }
       </style>
+      <h1 class="title">Stopwatch</h1>
       <div class="watch">
-        <div class="outer-circle">
-          <div class="inner-circle">
-            <span class='text min'>0 :</span>
-            <span class='text sec'>&nbsp;0 :</span>
-            <span class='text msec'>&nbsp;0</span>
-          </div>
+        <div class="circle">
+          <span class='text min'>00:</span>
+          <span class='text sec'>00:</span>
+          <span class='text msec'>00</span>
         </div>
         <div class="btn-wrapper">
           <button class='btn reset hidden'>Reset</button>
