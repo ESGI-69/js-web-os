@@ -55,7 +55,6 @@ const setTheme = (theme) => {
     document.body.style.setProperty('--color-red-darker', '#580000');
     document.body.style.setProperty('--color-topbar-background', 'rgba(0, 0, 0, 0.6)');
     document.body.style.setProperty('--color-dock-background', 'rgba(0, 0, 0, 0.2)');
-
   }
 };
 
@@ -65,3 +64,26 @@ if ('Notification' in window) {
 
 // Set theme on load
 setTheme(getSettingValue(findSetting('os-theme')));
+
+const openApp = (appId) => {
+  document.dispatchEvent(new CustomEvent('open-app', { detail: {id: appId, pushHistory: false} })); 
+};
+
+const closeApp = () => {
+  document.dispatchEvent(new CustomEvent('close-app', { detail: { pushHistory: false }}));
+};
+
+// Load app if url contains app
+const appId = window.location.hash.slice(1);
+if (appId) {
+  openApp(appId);
+}
+
+// Detect the hash change
+window.addEventListener('hashchange', (event) => {
+  if (event.currentTarget.location.hash) {
+    openApp(event.currentTarget.location.hash.slice(1));
+  } else {
+    closeApp();
+  }
+});

@@ -4,26 +4,26 @@ class appWrapper extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: 'open' });
+    this.app = null;
   }
 
   connectedCallback() {
     this.render();
     document.addEventListener('open-app', ({ detail }) => {
-      const app = allApps.find((app) => app.id === detail.id);
-      this.openApp(app);
+      this.openApp(detail.id, detail.pushHistory);
     });
 
     this.shadow.querySelector('#close').addEventListener('click', () => {
-      this.closeApp();
+      this.closeApp(true);
     });
 
-    document.addEventListener('close-app', () => {
-      this.closeApp();
+    document.addEventListener('close-app', ({ detail }) => {
+      this.closeApp(detail.pushHistory);
     });
 
     // oberver
     this.observer = new MutationObserver(() => {
-        this.render();
+      this.render();
     });
 
     this.observer.observe(this, {
@@ -32,16 +32,36 @@ class appWrapper extends HTMLElement {
     });
   }
 
-  openApp(app) {
-    this.shadow.querySelector('#app').innerHTML = `
-      <${app.tag}></${app.tag}>
-    `;
-    this.classList.add('open');
+  changeUrl(history) {
+    let url;
+    if (!this.app) {
+      url = new URL('', window.location.href);
+    } else {
+      url = new URL(`#${this.app.id}`, window.location.href);
+    }
+    if (history) {
+      window.history.pushState({}, '', url);
+    }
   }
 
-  closeApp() {
+  openApp(appId, pushHistory) {
+    this.app = allApps.find((app) => app.id === appId);
+    if (!this.app) {
+      return console.warn(`App ${appId} not found`);
+    }
+    this.shadow.querySelector('#app').innerHTML = `
+      <${this.app.tag}></${this.app.tag}>
+    `;
+    this.classList.add('open');
+    this.changeUrl(pushHistory);
+  }
+
+  closeApp(pushHistory) {
+    if (!this.classList.contains('open')) return;
+    this.app = null;
     this.classList.remove('open');
     this.shadow.querySelector('#app').innerHTML = '';
+    this.changeUrl(pushHistory);
   }
 
   attributeChangedCallback(prop, oldValue, newValue) {
