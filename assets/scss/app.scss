@@ -2,11 +2,24 @@
 
 html, body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #A3E1FA;
+  background-color: transparent;
   height: 100%;
 }
 
 body {
   background-size: cover;
   margin: 0;
+}
+
+#background {
+  position: fixed;
+  top: -30px;
+  left: -30px;
+  width: 125%;
+  height: 125%;
+  z-index: -1;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: transform 0.1s ease;
 }
