@@ -21,8 +21,8 @@ function handleOrientation(event) {
   let radBeta = beta * Math.PI / 180;
 
   // Déplacer l'image de fond en fonction de l'orientation
-  x = -radGamma * 10;
-  y = -radBeta * 10;
+  x = -radGamma * 20;
+  y = -radBeta * 20;
 
   background.style.transform = "translate(" + x + "px, " + y + "px)";
 }
