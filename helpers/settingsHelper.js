@@ -189,4 +189,34 @@ const getSettingValue = (setting) => {
   }
 }
 
-export { findSetting, getSettingValue, settings };
+const downloadLocalStorage = () => {
+  const file = new File([JSON.stringify(localStorage)], 'web-os.config.json');
+  const link = document.createElement('a');
+  link.style.display = "none";
+  link.download = file.name;
+  link.href = URL.createObjectURL(file);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+const importLocalStorage = (file) => {
+  const reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = (e) => {
+    localStorage.clear();
+    const data = JSON.parse(e.target.result);
+    for (let key in data) {
+      localStorage.setItem(key, data[key]);
+    }
+    window.location.reload();
+  };
+}
+
+export {
+  downloadLocalStorage,
+  findSetting,
+  getSettingValue,
+  importLocalStorage,
+  settings,
+};
