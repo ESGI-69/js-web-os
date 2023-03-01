@@ -164,6 +164,8 @@ const settings = [
         value: true
       },
     ],
+  },
+  {
     categoryName: 'Lockscreen',
     settings: [
       {
