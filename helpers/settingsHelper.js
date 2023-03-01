@@ -164,6 +164,35 @@ const settings = [
         value: true
       },
     ],
+    categoryName: 'Lockscreen',
+    settings: [
+      {
+        name: 'Lock Method',
+        localStorageKey: 'lockscreen-method',
+        id: 'lockscreen-method',
+        type: 'select',
+        options: [
+          {
+            name: 'None',
+            value: 'none',
+          },
+          {
+            name: 'Password',
+            value: 'password',
+          },
+        ],
+        value: 'none',
+      },
+      {
+        name: 'Password',
+        dependsOn: 'lockscreen-method',
+        dependsOnValue: 'password',
+        localStorageKey: 'lockscreen-password',
+        id: 'lockscreen-password',
+        type: 'text',
+        value: "",
+      }
+    ],
   }
 ];
 

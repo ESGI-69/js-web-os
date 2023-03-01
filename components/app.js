@@ -6,6 +6,9 @@ class App extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    document.addEventListener('lock', () => {
+      this.shadow.innerHTML+="<os-lock-screen></os-lock-screen>"
+    });
   }
 
   render() {
@@ -22,6 +25,7 @@ class App extends HTMLElement {
       <os-home-screen></os-home-screen>
       <os-dock class="dock"></os-dock>
       <os-app-wrapper></os-app-wrapper>
+      <os-lock-screen></os-lock-screen>
     `;
   }
 }
