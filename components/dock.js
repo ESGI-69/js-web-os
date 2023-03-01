@@ -26,10 +26,6 @@ class Dock extends HTMLElement {
 
   }
 
-  disconnectedCallback() {
-    console.log('disconnectedCallback');
-  }
-  
   render() {
     this.shadow.innerHTML = `
       <style>
