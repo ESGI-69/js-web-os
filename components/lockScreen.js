@@ -1,7 +1,7 @@
-import { 
+import {
   findSetting,
-  getSettingValue
-} from "../helpers/settingsHelper";
+  getSettingValue,
+} from '../helpers/settingsHelper';
 
 class LockScreen extends HTMLElement {
   constructor() {
@@ -18,17 +18,17 @@ class LockScreen extends HTMLElement {
   getLockScreen() {
     const method = getSettingValue(findSetting('lockscreen-method'));
     if (method === 'none') {
-      this.sliderLockScreen();
+      this.noPasswordLockScreen();
     } else if (method === 'password') {
       this.passwordLockScreen();
     }
   }
 
-  sliderLockScreen() {
-    this.unlockButton = this.shadow.querySelector('#slider');
+  noPasswordLockScreen() {
+    this.unlockButton = this.shadow.querySelector('#unlock');
     this.unlockButton.addEventListener('click', () => {
       this.unlock();
-    }); 
+    });
   }
 
   passwordLockScreen() {
@@ -36,11 +36,10 @@ class LockScreen extends HTMLElement {
     this.submitButton = this.shadow.querySelector('#submit-password');
   
     const submitHandler = () => {
+      if (this.passwordInput.value === '') return;
       if (this.passwordInput.value === this.password) {
-        console.log("password correct");
         this.unlock();
       } else {
-        console.log("password incorrect");
         this.shadow.querySelector('#wrong-password').style.display = "block";
       }
     };
@@ -65,17 +64,22 @@ class LockScreen extends HTMLElement {
     if (method === 'none') {
       return `
         <div id="container">
-          <div id="slider">
-            <img id="unlock" src="./assets/images/app-icons/unlock.svg">
-          </div>
-          <p>Slide to unlock</p>
+          <p>You can secure your connection by adding a password in the settings</p>
+          <button id="unlock">
+            Unlock
+          </button>
         </div>
       `;
     } else if (method === 'password') {
       return `
         <div id="container-password">
-          <input type="password" id="password" placeholder="Password">
-          <button id="submit-password">Unlock</button>
+          <div class="form">
+            <input type="password" id="password" placeholder="Password">
+            <button id="submit-password">
+              Unlock
+            </button>
+          </div>
+          <p id="wrong-password" style="display: none;"> Wrong password </p>
         </div>
       `;
     }
@@ -95,36 +99,19 @@ class LockScreen extends HTMLElement {
           z-index: 1000;
         }
 
-        :host #unlock {
-          position:absolute;
-          width: 1em;
-          height: 1em;
-          left:0;
-          right:0;
-          margin: auto;
-          color: white;
-          font-size:18px;
-          line-height: 61px;
-          cursor:pointer;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;  
-        }
-
         :host #container-password {
           display: flex;
           justify-content: center;
           align-items: center;
-          height: 50%;
+          height: 100%;
           flex-direction: column;
+          gap: 1rem;
         }
 
         :host #container-password #password {
           width: 200px;
-          height: 30px;
-          padding: 16px;
-          background-color: transparent;
+          padding: 0.75rem 1.5rem;
+          background-color: var(--color-text);
           border: 1px solid var(--color-dock-background);
           border-radius: 16px;
           color: white;
@@ -136,35 +123,37 @@ class LockScreen extends HTMLElement {
         }
         
 
-        :host #submit-password {
-          margin-top: 3rem;
+        :host #submit-password, :host #unlock {
           border: 1px solid var(--color-dock-background);
           border-radius: 16px;
           color: var(--color-text);
           font-size: 18px;
-          padding: 16px 32px;
-          background-color: transparent;
+          padding: 0.75rem 1.5rem;
+          background-color: var(--color-background);
+        }
+
+        :host .form {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
         }
 
         :host #container {
-          top: 65%;
-          width:270px;
-          height:65px;
+          width: 100%;
+          height: 100%;
           background: var(--color-dock-background);
-          margin-left:auto;
-          margin-right:auto;
-          display:block;
-          margin-top:30px;
-          border-radius:40px;
-          position:relative;
           box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
           transition:all 0.3s;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 1rem;
         }
 
         :host  p {
           text-align:center;
-          line-height:65px;
-          color:#DDD;
+          color: var(--color-text);
         }
 
         :host #slider {
@@ -199,9 +188,14 @@ class LockScreen extends HTMLElement {
           cursor:pointer;
         }
 
+        :host #wrong-password {
+          color: var(--color-red-dark);
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
       </style>
       ${this.generateHtmlWithSettings()}
-      <p id="wrong-password" style="display: none;"> Wrong password </p>
     `;
   }
 }
