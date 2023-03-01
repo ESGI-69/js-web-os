@@ -101,6 +101,8 @@ npm install
 npm run dev
 ```
 
+and go to : http://localhost:8081/
+
 ## Production :
 
 Link : [https://esgi-69.github.io/js-web-os/](https://esgi-69.github.io/js-web-os/)
