@@ -11,6 +11,10 @@ export default {
             return 'assets/images/[name]-[hash][extname]';
           }
 
+          if (/\.(mp3)$/.test(name ?? '')) {
+            return 'assets/sounds/[name]-[hash][extname]';
+          }
+
           if (/\.css$/.test(name ?? '')) {
             return 'assets/css/[name]-[hash][extname]';
           }
