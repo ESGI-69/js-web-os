@@ -1,4 +1,5 @@
 import allApps from '../allApps';
+import lock from '../assets/images/app-icons/lock.png';
 
 class Dock extends HTMLElement {
   constructor() {
@@ -40,7 +41,7 @@ class Dock extends HTMLElement {
         }
       </style>
       ${this.iconsInDock}
-      <img id="lock" src="./assets/images/app-icons/lock.png" width=50px height=50px>
+      <img id="lock" src="${lock}" width=50px height=50px>
     `;
   }
 
