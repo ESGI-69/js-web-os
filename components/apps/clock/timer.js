@@ -1,3 +1,4 @@
+import shotgun from '../../../assets/sounds/shotgun.mp3';
 import {
   findSetting,
   getSettingValue,
@@ -72,6 +73,10 @@ class TabTimer extends HTMLElement {
         this.vibrate();
 
         new Notification("Timer ended !!!");
+
+        if (getSettingValue(findSetting('clock-play-sound'))) {
+          new Audio(shotgun).play();
+        }
 
         setTimeout(() => {
           this.reset();
