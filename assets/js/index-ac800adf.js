@@ -139,7 +139,7 @@
           background-color: var(--color-text);
           border: 1px solid var(--color-dock-background);
           border-radius: 16px;
-          color: white;
+          color: var(--color-background);
           font-size: 18px;
         }
 
@@ -161,10 +161,10 @@
           display: flex;
           gap: 1rem;
           align-items: center;
+          flex-direction: column;
         }
 
         :host #container {
-          width: 100%;
           height: 100%;
           background: var(--color-dock-background);
           box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
